@@ -1,12 +1,19 @@
 package dtu.example.ui;
 
-import java.io.IOException;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
+
+import java.io.IOException;
 
 public class PrimaryController {
 
     @FXML
+    private TextField initialsField;
+
+    @FXML
     private void switchToSecondary() throws IOException {
-        App.setRoot("secondary");
+        String initials = initialsField.getText(); // For getting one information to the next scene
+        mainMenuController.setUserInitials(initials);
+        App.setRoot("mainMenu");
     }
 }
