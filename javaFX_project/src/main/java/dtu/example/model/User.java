@@ -1,7 +1,7 @@
 package dtu.example.model;
 
 public class User {
-    private String initials;
+    public String initials;
     private int numberOfAssignedActivities;
     public static final int MAX_CAPACITY = 20;
 
@@ -12,10 +12,6 @@ public class User {
 
     public int calculateUserCapacity() {
         return MAX_CAPACITY - numberOfAssignedActivities;
-    }
-
-    public String getInitials() {
-        return initials;
     }
 
     public void assignActivity() {
