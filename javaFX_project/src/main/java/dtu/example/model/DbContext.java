@@ -18,7 +18,7 @@ public class DbContext {
         this.users.add(user1);
 
         Project project1 = new Project("Project1", 1);
-        project1.addManager("AB");
+        project1.addManagers(new ArrayList<>(List.of("AB")));
         this.projects.add(project1);
     }
 }

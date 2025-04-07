@@ -1,0 +1,28 @@
+name: Run Tests
+
+on:
+  pull_request:
+    branches:
+      - main # Or any branches you want the workflow to trigger on
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '23' # Update to your project's Java version
+          distribution: 'temurin'
+
+      - name: Install dependencies
+        run: mvn install
+        working-directory: ./javaFX_project # Set the correct directory for Maven
+
+      - name: Run tests
+        run: mvn test
+        working-directory: ./javaFX_project # Set the correct directory for Maven
