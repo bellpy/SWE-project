@@ -20,7 +20,9 @@ jobs:
           distribution: 'temurin'
 
       - name: Install dependencies
-        run: mvn install # Or your build tool command
+        run: mvn install
+        working-directory: ./javaFX_project # Set the correct directory for Maven
 
       - name: Run tests
-        run: mvn test # Or your build tool command
+        run: mvn test
+        working-directory: ./javaFX_project # Set the correct directory for Maven
