@@ -20,7 +20,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Install dependencies
-        run: ./gradlew dependencies # Or your build tool command
+        run: mvn install # Or your build tool command
 
       - name: Run tests
-        run: ./gradlew test # Or your build tool command
+        run: mvn test # Or your build tool command
