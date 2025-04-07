@@ -1,0 +1,25 @@
+name: Run Tests
+
+on:
+  pull_request:
+    branches:
+      - main # Or any branches you want the workflow to trigger on
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17' # Update to your project's Java version
+
+      - name: Install dependencies
+        run: ./gradlew dependencies # Or your build tool command
+
+      - name: Run tests
+        run: ./gradlew test # Or your build tool command
