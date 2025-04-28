@@ -13,7 +13,7 @@ public class LoginController {
     @FXML
     private void switchToSecondary() throws IOException {
         String initials = initialsField.getText(); // For getting one information to the next scene
-        mainMenuController.setUserInitials(initials);
+        //MainMenuController.setUserInitials(initials);
         App.setRoot("mainMenu");
     }
 }
