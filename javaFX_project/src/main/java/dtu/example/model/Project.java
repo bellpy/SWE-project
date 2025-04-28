@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Project {
-    public List<String> Managers;
     public String name;
+    public List<String> Managers;
     public long id;
 
     public Project(String name, long id) {

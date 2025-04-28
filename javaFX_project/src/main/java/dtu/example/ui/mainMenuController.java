@@ -23,6 +23,6 @@ public class mainMenuController {
 
     @FXML
     private void switchToPrimary() throws IOException {
-        App.setRoot("primary");
+        App.setRoot("login");
     }
 }

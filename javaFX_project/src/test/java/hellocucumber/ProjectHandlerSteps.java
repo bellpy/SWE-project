@@ -13,6 +13,8 @@ public class ProjectHandlerSteps {
     DbContext dbContext = new DbContext();
     ProjectHandler projectHandler;
 
+
+    // Scenario 1: User can create a new project
     @Given("the project handler have been initilized")
     public void theProjectHandlerHaveBeenInitilized() {
         projectHandler = new ProjectHandler(dbContext);
