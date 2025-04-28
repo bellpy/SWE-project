@@ -1,5 +1,7 @@
 package dtu.example.handler;
 
+import java.util.List;
+
 import dtu.example.model.Activity;
 import dtu.example.model.DbContext;
 
@@ -14,5 +16,11 @@ public class ActivityHandler {
     public void createActivity(int projectNumber, String name, int activityNumber) {
         Activity activity = new Activity(activityNumber, name, projectNumber);
         dbContext.activities.add(activity);
+    }
+
+    public List<Activity> getActivitiesByProjectNumber(long projectNumber) {
+        return dbContext.activities.stream()
+                .filter(activity -> activity.getProjectNumber() == projectNumber)
+                .toList();
     }
 }

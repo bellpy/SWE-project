@@ -1,61 +1,112 @@
 package dtu.example.ui;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
+import dtu.example.model.Activity;
 import dtu.example.model.DbContext;
 import dtu.example.model.Project;
 import dtu.example.handler.ProjectHandler;
+import dtu.example.handler.ActivityHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MainMenuController {
     DbContext dbContext;
+    ProjectHandler projectHandler;
+    ActivityHandler activityHandler;
 
-    // @FXML
-    // private Label initialsLabel;
+    private Map<String, Long> projectNameToIdMap = new HashMap<>();
 
-    // private static String userInitials;
+    private static String userInitials;
 
-    // public static void setUserInitials(String initials) {
-    // userInitials = initials;
-    // }
+    @FXML
+    private ListView<String> projectsListView; // Add this field and annotate it with @FXML
+    @FXML
+    private Label projectNameLabel;
+
     public void setDbContext(DbContext dbContext) {
         this.dbContext = dbContext;
     }
 
-    private static String userInitials;
-    
-    @FXML
-    private ListView<String> projectsListView; // Add this field and annotate it with @FXML
-   
     public void setUserInitials(String initials) {
         userInitials = initials;
     }
 
     public void GetProject() {
-        ProjectHandler projectHandler = new ProjectHandler(dbContext);
-
-        // Convert List<Project> to List<String> (e.g., project names)
-        ObservableList<String> projects = FXCollections.observableArrayList(
-                projectHandler.getAllProjects().stream()
-                        .map(Project::getName) // Assuming Project has a getName() method
-                        .toList());
+        projectHandler = new ProjectHandler(dbContext);
+        activityHandler = new ActivityHandler(dbContext);
+        // Convert List<Project> to List<String> (e.g., project names) and populate the
+        // map
+        ObservableList<String> projects = FXCollections.observableArrayList();
+        projectHandler.getAllProjects().forEach(project -> {
+            projects.add(project.getName());
+            projectNameToIdMap.put(project.getName(), project.getId()); // Map project name to ID
+        });
 
         projectsListView.setItems(projects); // Populate the ListView
+
+        // Add a listener to handle selection changes
+        setupProjectSelectionListener();
     }
 
-    public void onDbContextSet() {
-        if (dbContext != null) {
-            GetProject();
+    private void setupProjectSelectionListener() {
+        // Makes it load the projects faster
+        projectsListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                Task<Project> task = new Task<>() {
+                    @Override
+                    protected Project call() {
+                        return getSelectedProject();
+                    }
+                };
+
+                task.setOnSucceeded(event -> {
+                    Project selectedProject = task.getValue();
+                    if (selectedProject != null) {
+                        projectNameLabel.setText(selectedProject.getName());
+                        var allActivities = activityHandler.getActivitiesByProjectNumber(selectedProject.getId());
+                    }
+                });
+
+                task.setOnFailed(event -> {
+                    System.err.println("Failed to load project: " + task.getException());
+                });
+
+                new Thread(task).start();
+            }
+        });
+    }
+
+    private void setupActivitiesTable() {
+        // Bind the TableColumn to the activity name property
+        activityNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        // Bind the ObservableList to the TableView
+        activitiesTableView.setItems(activities);
+    }
+
+    public Project getSelectedProject() {
+        String selectedProjectName = projectsListView.getSelectionModel().getSelectedItem();
+        if (selectedProjectName != null && projectNameToIdMap.containsKey(selectedProjectName)) {
+            long projectId = projectNameToIdMap.get(selectedProjectName);
+            ProjectHandler projectHandler = new ProjectHandler(dbContext);
+            return projectHandler.getProjectById(projectId); // Fetch the full project details
         }
+        return null; // Return null if no project is selected or ID is not found
     }
 
     @FXML
@@ -70,6 +121,13 @@ public class MainMenuController {
     }
 
     @FXML
+    private TableView<Activity> activitiesTableView; // TableView for activities
+    @FXML
+    private TableColumn<Activity, String> activityNameColumn; // TableColumn for activity names
+
+    private ObservableList<Activity> activities = FXCollections.observableArrayList(); // ObservableList for activities
+
+    @FXML
     private void initialize() {
         // initialsLabel.setText("Welcome, " + userInitials);
     }
@@ -78,4 +136,11 @@ public class MainMenuController {
     private void switchToPrimary() throws IOException {
         App.setRoot("login");
     }
+
+    public void onDbContextSet() {
+        if (dbContext != null) {
+            GetProject();
+        }
+    }
+
 }

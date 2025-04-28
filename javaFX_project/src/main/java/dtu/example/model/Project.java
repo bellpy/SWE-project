@@ -17,6 +17,10 @@ public class Project {
     public String getName() {
         return name;
     }
+
+    public long getId() {
+        return id;
+    }
     
     public void addManagers(List<String> managers) {
         Managers.addAll(managers);

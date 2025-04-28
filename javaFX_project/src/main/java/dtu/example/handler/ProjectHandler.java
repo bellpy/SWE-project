@@ -27,6 +27,13 @@ public class ProjectHandler {
         return project;
     }
 
+    public Project getProjectById(long id){
+        return dbContext.projects.stream()
+                .filter(p -> p.getId() == id)
+                .findFirst()
+                .orElse(null);
+    }
+
     public List<Project> getAllProjects() {
         return dbContext.projects;
     }
@@ -36,14 +43,14 @@ public class ProjectHandler {
     }
 
     public boolean removeProject(int id) {
-        return dbContext.projects.removeIf(p -> p.id == id);
+        return dbContext.projects.removeIf(p -> p.getId() == id);
     }
 
     private long generateProjectId() {
         String todayPrefix = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
     
         int maxSuffix = dbContext.projects.stream()
-                .map(p -> String.valueOf(p.id))
+                .map(p -> String.valueOf(p.getId()))
                 .filter(id -> id.startsWith(todayPrefix))
                 .mapToInt(id -> Integer.parseInt(id.substring(8)))
                 .max()

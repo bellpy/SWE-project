@@ -5,11 +5,11 @@ import java.util.List;
 
 public class Activity {
     private List<String> userInitials;
-    private int projectNumber;
+    private long projectNumber;
     private String activityName;
     private int number;
 
-    public Activity(int number, String name, int projectNumber) {
+    public Activity(int number, String name, long projectNumber) {
         this.number = number;
         this.activityName = name;
         this.projectNumber = projectNumber;
@@ -20,7 +20,7 @@ public class Activity {
         return this.activityName;
     }
 
-    public int getProjectNumber() {
+    public long getProjectNumber() {
         return this.projectNumber;
     }
 

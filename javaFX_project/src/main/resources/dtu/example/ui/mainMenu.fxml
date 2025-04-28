@@ -84,14 +84,14 @@
                                  <children>
                                     <TableView layoutX="24.0" layoutY="124.0" prefHeight="248.0" prefWidth="382.0">
                                       <columns>
-                                        <TableColumn prefWidth="75.0" text="Acitivity" />
+                                        <TableColumn  fx:id="activityNameColumn" prefWidth="75.0" text="Acitivity" />
                                         <TableColumn prefWidth="75.0" text="Employees" />
                                           <TableColumn prefWidth="75.0" text="Start date" />
                                           <TableColumn prefWidth="75.0" text="End date" />
                                           <TableColumn prefWidth="75.0" text="Edit" />
                                       </columns>
                                     </TableView>
-                                    <Label layoutX="24.0" layoutY="23.0" text="*Project name*">
+                                    <Label fx:id="projectNameLabel" layoutX="24.0" layoutY="23.0" text="*Project name*">
                                        <font>
                                           <Font size="21.0" />
                                        </font>
