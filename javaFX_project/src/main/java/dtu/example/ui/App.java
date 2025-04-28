@@ -1,3 +1,4 @@
+
 package dtu.example.ui;
 
 import javafx.application.Application;
@@ -8,22 +9,31 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import dtu.example.model.DbContext;
+
 /**
  * JavaFX App
  */
-public class App extends Application {
 
+public class App extends Application {
+    private DbContext dbContext;
     private static Scene scene;
 
-    @Override
-    public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("login"), 640, 400);
-        stage.setScene(scene);
-        stage.show();
-    }
+    private static Stage primaryStage;
 
+    @Override
+    public void start(Stage stage) throws Exception {
+        primaryStage = stage;
+        primaryStage.setScene(new Scene(loadFXML("login"), 640, 400)); // Set scene size to 800x600
+        primaryStage.show();
+    }
+    
     static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
+    }
+
+    public static Stage getPrimaryStage() {
+        return primaryStage;
     }
 
     public static Parent loadFXML(String fxml) throws IOException {

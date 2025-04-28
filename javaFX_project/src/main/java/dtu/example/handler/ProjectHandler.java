@@ -27,6 +27,10 @@ public class ProjectHandler {
         return project;
     }
 
+    public List<Project> getAllProjects() {
+        return dbContext.projects;
+    }
+
     public void addProject(Project project) {
         dbContext.projects.add(project);
     }

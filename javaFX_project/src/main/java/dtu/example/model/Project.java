@@ -13,6 +13,10 @@ public class Project {
         this.id = id;
         Managers = new ArrayList<>();
     }
+
+    public String getName() {
+        return name;
+    }
     
     public void addManagers(List<String> managers) {
         Managers.addAll(managers);
