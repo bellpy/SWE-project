@@ -4,7 +4,6 @@ import java.util.List;
 
 import dtu.example.model.Activity;
 import dtu.example.model.DbContext;
-import dtu.example.model.User;
 
 public class ActivityHandler {
     

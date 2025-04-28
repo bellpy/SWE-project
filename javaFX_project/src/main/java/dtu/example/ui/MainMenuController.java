@@ -46,7 +46,7 @@ public class MainMenuController {
         userInitials = initials;
     }
 
-    public void GetProject() {
+    public void getProject() {
         projectHandler = new ProjectHandler(dbContext);
         activityHandler = new ActivityHandler(dbContext);
         // Convert List<Project> to List<String> (e.g., project names) and populate the
@@ -114,7 +114,7 @@ public class MainMenuController {
 
     @FXML
     private void openCreateProjectPopup() throws IOException {
-        Parent popupContent = App.loadFXML("CreateProject"); // ← reuse App's loadFXML method!
+        Parent popupContent = App.loadFXML("createProject"); // ← reuse App's loadFXML method!
 
         Stage popupStage = new Stage();
         popupStage.setTitle("Create Project");
@@ -122,6 +122,18 @@ public class MainMenuController {
         popupStage.setScene(new Scene(popupContent));
         popupStage.showAndWait();
     }
+
+    @FXML
+    private void openCreateActivityPopup() throws IOException {
+        Parent popupContent = App.loadFXML("createActivity"); // ← reuse App's loadFXML method!
+
+        Stage popupStage = new Stage();
+        popupStage.setTitle("Create Activity");
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        popupStage.setScene(new Scene(popupContent));
+        popupStage.showAndWait();
+    }
+
 
     //everything for activities 
     @FXML
@@ -145,7 +157,7 @@ public class MainMenuController {
 
     public void onDbContextSet() {
         if (dbContext != null) {
-            GetProject();
+            getProject();
         }
     }
 
