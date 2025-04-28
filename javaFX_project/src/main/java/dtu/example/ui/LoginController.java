@@ -5,7 +5,7 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
-public class PrimaryController {
+public class LoginController {
 
     @FXML
     private TextField initialsField;
