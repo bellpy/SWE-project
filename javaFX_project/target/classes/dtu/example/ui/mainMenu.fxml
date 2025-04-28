@@ -82,7 +82,7 @@
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="368.0">
                                  <children>
-                                    <TableView layoutX="24.0" layoutY="124.0" prefHeight="248.0" prefWidth="382.0">
+                                    <TableView fx:id="activitiesTableView" layoutX="24.0" layoutY="124.0" prefHeight="248.0" prefWidth="382.0">
                                       <columns>
                                         <TableColumn  fx:id="activityNameColumn" prefWidth="75.0" text="Acitivity" />
                                         <TableColumn prefWidth="75.0" text="Employees" />

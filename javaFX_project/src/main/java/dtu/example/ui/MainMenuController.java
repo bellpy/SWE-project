@@ -79,6 +79,8 @@ public class MainMenuController {
                     if (selectedProject != null) {
                         projectNameLabel.setText(selectedProject.getName());
                         var allActivities = activityHandler.getActivitiesByProjectNumber(selectedProject.getId());
+                        activities.setAll(allActivities);
+                        setupActivitiesTable();
                     }
                 });
 
@@ -92,9 +94,9 @@ public class MainMenuController {
     }
 
     private void setupActivitiesTable() {
-        // Bind the TableColumn to the activity name property
+        // Bind the TableColumn to the name property
         activityNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-
+    
         // Bind the ObservableList to the TableView
         activitiesTableView.setItems(activities);
     }
@@ -120,6 +122,7 @@ public class MainMenuController {
         popupStage.showAndWait();
     }
 
+    //everything for activities 
     @FXML
     private TableView<Activity> activitiesTableView; // TableView for activities
     @FXML

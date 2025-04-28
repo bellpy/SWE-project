@@ -26,7 +26,7 @@ public class DbContext {
         project1.addManagers(new ArrayList<>(List.of("AB")));
         this.projects.addAll(List.of(project1, project2));
 
-        Activity activity1 = new Activity(1, "Development", 101); // projectNumber, name, activityNumber
+        Activity activity1 = new Activity(1, "Development", project1.getId()); // projectNumber, name, activityNumber
         this.activities.add(activity1);
     }
 }

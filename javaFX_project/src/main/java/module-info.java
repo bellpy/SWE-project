@@ -2,6 +2,7 @@ module hellofx {
     requires transitive javafx.controls;
     requires javafx.fxml;
  
-    opens dtu.example.ui to javafx.fxml; // Gives access to fxml files
-    exports dtu.example.ui; // Exports the class inheriting from javafx.application.Application
+    opens dtu.example.model to javafx.base; // Allow JavaFX to access Activity properties
+    exports dtu.example.ui;
+    opens dtu.example.ui to javafx.fxml;
 }
