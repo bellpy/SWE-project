@@ -12,4 +12,21 @@ public class TimeRegistration {
         this.hoursWorked = hoursWorked;
         this.date = date;
     }
+
+    public String getUserInitials() {
+        return this.userInitials;
+    }
+
+    public int getActivityNumber() {
+        return this.activityNumber;
+    }
+
+    public double getHoursWorked() {
+        return this.hoursWorked;
+    }
+
+    public String getDate() {
+        return this.date;
+    }
+
 }

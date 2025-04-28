@@ -9,14 +9,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-import dtu.example.model.DbContext;
-
 /**
  * JavaFX App
  */
 
 public class App extends Application {
-    private DbContext dbContext;
+    
     private static Scene scene;
 
     private static Stage primaryStage;
@@ -24,7 +22,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
-        primaryStage.setScene(new Scene(loadFXML("login"), 640, 400)); // Set scene size to 800x600
+        primaryStage.setScene(new Scene(loadFXML("login"), 660, 400)); // Set scene size to 800x600
         primaryStage.show();
     }
     

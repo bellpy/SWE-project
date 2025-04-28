@@ -6,11 +6,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import dtu.example.handler.ActivityHandler;
 import dtu.example.model.DbContext;
 import dtu.example.model.Activity;
+import dtu.example.model.User;
 
 public class ActivityHandlerSteps {
     DbContext dbContext = new DbContext();
     ActivityHandler activityHandler;
+    Activity activity;
 
+    // Scenario 1
     @Given("the activity handler have been initilized")
     public void theActivityHandlerHaveBeenInitilized() {
         activityHandler = new ActivityHandler(dbContext);
@@ -34,5 +37,41 @@ public class ActivityHandlerSteps {
         // Verify it has the correct properties (assuming projectNumber 0 was used in @When)
         assertEquals(0, activity.getProjectNumber(), "Activity should belong to correct project");
         assertEquals(string, activity.getName(), "Activity name should match");
+    }
+
+    // Scenario 2
+    @Given("a user with initials {string} exists")
+    public void aUserWithInitialsExists(String string) {
+        User user = new User(string);
+        dbContext.users.add(user);
+    }
+    
+    @Given("an employee with initials {string} exists")
+    public void anEmployeeWithInitialsExists(String string) {
+        User employee = new User(string);
+        dbContext.users.add(employee);
+    }
+
+    @Given("an activity with number {int} exists")
+    public void anActivityWithNumberExists(Integer activityNumber) {
+        activity = new Activity(activityNumber, "Test Activity", 1001);
+        dbContext.activities.add(activity);
+    }
+
+    @When("user adds employee with initials {string} to the activity")
+    public void userAddsEmployeeWithInitialsToTheActivity(String initials) {
+        activity.addUserInitials(initials);
+    }
+
+    @Then("the activity {int} has the employee with initials {string}, assigned to it")
+    public void theActivityHasTheEmployeeWithInitialsAssignedTo(Integer activityNumber, String expectedInitials) {
+        Activity activity = dbContext.activities.stream()
+        .filter(a -> a.getNumber() == activityNumber)
+        .findFirst()
+        .orElse(null);
+        
+        assertNotNull(activity, "Activity should exist");
+        assertEquals(activityNumber, activity.getNumber(), "Activity number should match");
+        assertTrue(activity.getUserInitials().contains(expectedInitials), "Activity should have employee with initials " + expectedInitials);
     }
 }

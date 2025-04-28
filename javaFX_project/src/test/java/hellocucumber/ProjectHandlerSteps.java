@@ -15,7 +15,7 @@ public class ProjectHandlerSteps {
 
 
     // Scenario 1: User can create a new project
-    @Given("the project handler have been initilized")
+    @Given("the project handler has been initialized")
     public void theProjectHandlerHaveBeenInitilized() {
         projectHandler = new ProjectHandler(dbContext);
     }
