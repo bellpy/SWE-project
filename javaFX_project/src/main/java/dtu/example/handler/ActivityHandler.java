@@ -4,6 +4,7 @@ import java.util.List;
 
 import dtu.example.model.Activity;
 import dtu.example.model.DbContext;
+import dtu.example.model.User;
 
 public class ActivityHandler {
     
@@ -22,5 +23,17 @@ public class ActivityHandler {
         return dbContext.activities.stream()
                 .filter(activity -> activity.getProjectNumber() == projectNumber)
                 .toList();
+    }
+
+    public List<String> getUsersByActivityNumber(int activityNumber) {
+        return dbContext.activities.stream()
+                .filter(activity -> activity.getNumber() == activityNumber)
+                .flatMap(activity -> activity.getUserInitials().stream())
+                .toList();
+    }
+
+    public String getUserInitialsAsString(int activityNumber) {
+        return getUsersByActivityNumber(activityNumber).stream()
+                .reduce("", (a, b) -> a + ", " + b);
     }
 }

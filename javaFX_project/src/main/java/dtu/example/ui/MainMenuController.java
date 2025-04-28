@@ -96,6 +96,7 @@ public class MainMenuController {
     private void setupActivitiesTable() {
         // Bind the TableColumn to the name property
         activityNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        activityEmployeesColoumn.setCellValueFactory(new PropertyValueFactory<>("userInitialsAsString"));
     
         // Bind the ObservableList to the TableView
         activitiesTableView.setItems(activities);
@@ -127,6 +128,8 @@ public class MainMenuController {
     private TableView<Activity> activitiesTableView; // TableView for activities
     @FXML
     private TableColumn<Activity, String> activityNameColumn; // TableColumn for activity names
+    @FXML
+    private TableColumn<Activity, String> activityEmployeesColoumn; // TableColumn for activity names
 
     private ObservableList<Activity> activities = FXCollections.observableArrayList(); // ObservableList for activities
 

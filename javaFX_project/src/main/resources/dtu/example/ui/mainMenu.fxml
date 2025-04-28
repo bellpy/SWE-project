@@ -85,7 +85,7 @@
                                     <TableView fx:id="activitiesTableView" layoutX="24.0" layoutY="124.0" prefHeight="248.0" prefWidth="382.0">
                                       <columns>
                                         <TableColumn  fx:id="activityNameColumn" prefWidth="75.0" text="Acitivity" />
-                                        <TableColumn prefWidth="75.0" text="Employees" />
+                                        <TableColumn fx:id="activityEmployeesColoumn" prefWidth="75.0" text="Employees" />
                                           <TableColumn prefWidth="75.0" text="Start date" />
                                           <TableColumn prefWidth="75.0" text="End date" />
                                           <TableColumn prefWidth="75.0" text="Edit" />

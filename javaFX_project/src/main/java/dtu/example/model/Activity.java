@@ -27,8 +27,16 @@ public class Activity {
     public List<String> getUserInitials() {
         return this.userInitials;
     }
+    
+    public void addUserInitials(String userInitials) {
+        this.userInitials.add(userInitials);
+    }
 
     public int getNumber() {
         return this.number;
+    }
+
+    public String getUserInitialsAsString() {
+        return String.join(", ", this.userInitials); // Convert list to comma-separated string
     }
 }

@@ -27,6 +27,7 @@ public class DbContext {
         this.projects.addAll(List.of(project1, project2));
 
         Activity activity1 = new Activity(1, "Development", project1.getId()); // projectNumber, name, activityNumber
+        activity1.addUserInitials(user1.initials);
         this.activities.add(activity1);
     }
 }
