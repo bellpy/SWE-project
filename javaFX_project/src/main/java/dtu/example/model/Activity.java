@@ -4,48 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Activity {
+    private List<String> userInitials;
     private int projectNumber;
-    private String name;
+    private String activityName;
     private int number;
-    private List<String> userInitials = new ArrayList<>();
 
-    public Activity(int activityNumber, String name, int projectNumber) {
-        this.number = activityNumber;
-        this.name = name;
+    public Activity(int number, String name, int projectNumber) {
+        this.number = number;
+        this.activityName = name;
         this.projectNumber = projectNumber;
         this.userInitials = new ArrayList<>();
     }
 
-    // Getters and setters
-    public int getProjectNumber() {
-        return projectNumber;
-    }
-
-    public void setProjectNumber(int projectNumber) {
-        this.projectNumber = projectNumber;
-    }
-
     public String getName() {
-        return name;
+        return this.activityName;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
+    public int getProjectNumber() {
+        return this.projectNumber;
     }
 
     public List<String> getUserInitials() {
-        return userInitials;
+        return this.userInitials;
     }
 
-    public void setUserInitials(List<String> userInitials) {
-        this.userInitials = userInitials;
+    public int getNumber() {
+        return this.number;
     }
 }

@@ -49,5 +49,4 @@ public class ProjectHandler {
     
         return Long.parseLong(todayPrefix + String.format("%04d", nextSuffix));
     }
-    
 }
