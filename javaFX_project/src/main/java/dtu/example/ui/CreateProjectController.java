@@ -42,11 +42,9 @@ public class CreateProjectController {
 
         submitButton.setOnAction(e -> {
             String title = titleField.getText();
-            String description = descriptionField.getText();
             if (!title.isBlank()) {
                 long id = dbContext.projects.size() + 1;
                 Project project = new Project(title, id);
-                project.setDescription(description);
                 project.addManagers(managers);
                 project.dateCreated = LocalDate.now();
                 dbContext.projects.add(project);
