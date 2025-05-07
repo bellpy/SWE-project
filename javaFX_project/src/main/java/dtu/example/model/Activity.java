@@ -8,6 +8,9 @@ public class Activity {
     private long projectNumber;
     private String activityName;
     private int number;
+    private int startWeek;
+    private int endWeek;
+    private int estimatedHours;
 
     public Activity(int number, String name, long projectNumber) {
         this.number = number;
@@ -18,6 +21,14 @@ public class Activity {
 
     public String getName() {
         return this.activityName;
+    }
+
+    public void setEstimatedHours(int estimatedHours) {
+        this.estimatedHours = estimatedHours;
+    }
+    
+    public int getEstimatedHours() {
+        return this.estimatedHours;
     }
 
     public long getProjectNumber() {
@@ -42,5 +53,21 @@ public class Activity {
 
     public String getUserInitialsAsString() {
         return String.join(", ", this.userInitials); // Convert list to comma-separated string
+    }
+
+    public int getStartWeek() {
+        return startWeek;
+    }
+    
+    public void setStartWeek(int startWeek) {
+        this.startWeek = startWeek;
+    }
+    
+    public int getEndWeek() {
+        return endWeek;
+    }
+    
+    public void setEndWeek(int endWeek) {
+        this.endWeek = endWeek;
     }
 }

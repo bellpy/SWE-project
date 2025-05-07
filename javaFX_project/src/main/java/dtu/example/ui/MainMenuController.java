@@ -41,6 +41,8 @@ public class MainMenuController {
     private Label projectLeadLabel;
     @FXML
     private Label projectDateLabel;
+    @FXML
+    private Label currentUserLabel;
 
     public void setDbContext(DbContext dbContext) {
         this.dbContext = dbContext;
@@ -48,6 +50,9 @@ public class MainMenuController {
 
     public void setUserInitials(String initials) {
         userInitials = initials;
+        if (currentUserLabel != null) {
+            currentUserLabel.setText(userInitials);
+        }
     }
 
     public void getProject() {
@@ -116,6 +121,9 @@ public class MainMenuController {
         // Bind the TableColumn to the name property
         activityNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         activityEmployeesColoumn.setCellValueFactory(new PropertyValueFactory<>("userInitialsAsString"));
+        startWeekColumn.setCellValueFactory(new PropertyValueFactory<>("startWeek"));
+        endWeekColumn.setCellValueFactory(new PropertyValueFactory<>("endWeek"));
+        estimatedHoursColumn.setCellValueFactory(new PropertyValueFactory<>("estimatedHours"));
 
         // Bind the ObservableList to the TableView
         activitiesTableView.setItems(activities);
@@ -193,7 +201,13 @@ public class MainMenuController {
     @FXML
     private TableColumn<Activity, String> activityNameColumn; // TableColumn for activity names
     @FXML
-    private TableColumn<Activity, String> activityEmployeesColoumn; // TableColumn for activity names
+    private TableColumn<Activity, String> activityEmployeesColoumn; // TableColumn for employees
+    @FXML
+    private TableColumn<Activity, Integer> startWeekColumn;
+    @FXML
+    private TableColumn<Activity, Integer> endWeekColumn;
+    @FXML
+    private TableColumn<Activity, Integer> estimatedHoursColumn;
 
     private ObservableList<Activity> activities = FXCollections.observableArrayList(); // ObservableList for activities
 
@@ -211,5 +225,4 @@ public class MainMenuController {
             getUserActivities();
         }
     }
-
 }
