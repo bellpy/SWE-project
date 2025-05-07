@@ -1,2 +1,6 @@
 # === Build artifacts ===
 /target/
+
+
+# Compiled class files
+*.class
