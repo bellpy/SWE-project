@@ -21,6 +21,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -74,14 +76,13 @@ public class MainMenuController {
             activityHandler.getAllUserActivities(userInitials).forEach(activity -> {
                 userActivities.add(activity.getName()); // Add activity names to the list
             });
-    
+
             // Populate the ListView for "Your Activities"
             yourActivitiesListView.setItems(userActivities);
         }
     }
 
     private void setupProjectSelectionListener() {
-        // Makes it load the projects faster
         projectsListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 Task<Project> task = new Task<>() {
@@ -90,23 +91,27 @@ public class MainMenuController {
                         return getSelectedProject();
                     }
                 };
-
+    
                 task.setOnSucceeded(event -> {
                     Project selectedProject = task.getValue();
                     if (selectedProject != null) {
+                        // Update the project details
                         projectNameLabel.setText(selectedProject.getName());
                         var allActivities = activityHandler.getActivitiesByProjectNumber(selectedProject.getId());
                         activities.setAll(allActivities);
                         projectLeadLabel.setText(selectedProject.getManagersAsString());
                         projectDateLabel.setText(selectedProject.getDateCreated().toString());
                         setupActivitiesTable();
+    
+                        // Show the project details pane
+                        showProjectDetails();
                     }
                 });
-
+    
                 task.setOnFailed(event -> {
                     System.err.println("Failed to load project: " + task.getException());
                 });
-
+    
                 new Thread(task).start();
             }
         });
@@ -155,7 +160,8 @@ public class MainMenuController {
 
         if (selectedProject == null) {
             // Show alert box
-            javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.WARNING);
+            javafx.scene.control.Alert alert = new javafx.scene.control.Alert(
+                    javafx.scene.control.Alert.AlertType.WARNING);
             alert.setTitle("No Project Selected");
             alert.setHeaderText(null);
             alert.setContentText("Please select a project before creating an activity.");
@@ -186,8 +192,8 @@ public class MainMenuController {
             activities.setAll(updatedActivities);
         }
     }
-    
-    //everything for activities 
+
+    // everything for activities
     @FXML
     private TableView<Activity> activitiesTableView; // TableView for activities
     @FXML
@@ -202,6 +208,7 @@ public class MainMenuController {
 
     @FXML
     private void initialize() {
+        preloadRegistrationsView();
         setupActivitySelectionListener();
         setupProjectSelectionListener();
         // initialsLabel.setText("Welcome, " + userInitials);
@@ -211,8 +218,16 @@ public class MainMenuController {
         if (dbContext != null) {
             getProject();
             getUserActivities();
+            preloadRegistrationsView();
         }
     }
+
+    @FXML
+    private StackPane detailsStackPane; // The StackPane containing the project and activity details
+    @FXML
+    private AnchorPane projectDetailsPane; // The default project details pane
+
+    private Parent registrationsView; // Cache the RegistrationsView for reuse
 
     private void setupActivitySelectionListener() {
         yourActivitiesListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -225,29 +240,46 @@ public class MainMenuController {
     
                 if (selectedActivity != null) {
                     try {
-                        FXMLLoader loader = new FXMLLoader(App.class.getResource("RegistrationsView.fxml"));
-                        Parent registrationView = loader.load();
+                        // Ensure the RegistrationsView is preloaded
+                        if (registrationsView == null) {
+                            preloadRegistrationsView();
+                        }
     
-                        RegistrationsController controller = loader.getController();
-                        controller.init(dbContext, userInitials, () -> {
-                            try {
-                                Parent mainMenuView = App.loadFXML("mainMenu");
-                                Scene mainMenuScene = new Scene(mainMenuView);
-                                App.getPrimaryStage().setScene(mainMenuScene);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        });
-                        controller.loadFor(selectedActivity);
+                        // Retrieve the controller from the UserData
+                        RegistrationsController controller = (RegistrationsController) registrationsView.getUserData();
+                        if (controller != null) {
+                            // Update the RegistrationsView with the selected activity
+                            controller.loadFor(selectedActivity);
     
-                        Scene registrationScene = new Scene(registrationView);
-                        App.getPrimaryStage().setScene(registrationScene);
-                    } catch (IOException e) {
+                            // Show the RegistrationsView
+                            detailsStackPane.getChildren().setAll(registrationsView);
+                        } else {
+                            throw new IllegalStateException("RegistrationsController is not set in UserData.");
+                        }
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             }
         });
+    }
+
+    private void preloadRegistrationsView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("RegistrationsView.fxml"));
+            registrationsView = loader.load();
+    
+            // Get the controller and store it in the UserData of the view
+            RegistrationsController controller = loader.getController();
+            controller.init(dbContext, userInitials, this::showProjectDetails);
+            registrationsView.setUserData(controller);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void showProjectDetails() {
+        // Show the project details pane
+        detailsStackPane.getChildren().setAll(projectDetailsPane);
     }
 
 }

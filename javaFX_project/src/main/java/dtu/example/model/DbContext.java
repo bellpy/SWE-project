@@ -34,13 +34,16 @@ public class DbContext {
 
         // Activities
         Activity activity1 = new Activity(1, "Development", project1.getId()); // projectNumber, name, activityNumber
+        Activity activity2 = new Activity(2, "Design", project1.getId()); // projectNumber, name, activityNumber
         activity1.addUserInitials(user1.initials);
         activity1.addUserInitials(huba.initials);
-        this.activities.add(activity1);
+        activity2.addUserInitials(huba.initials);
+        this.activities.addAll(List.of(activity1, activity2));
 
         // Time Registrations
         LocalDate date = LocalDate.now();
         TimeRegistration timeRegistration1 = new TimeRegistration(huba.initials, activity1.getNumber(), 8, date.minusDays(1));
-        this.timeRegistrations.add(timeRegistration1);
+        TimeRegistration timeRegistration2 = new TimeRegistration(huba.initials, activity2.getNumber(), 4, date.minusDays(2));
+        this.timeRegistrations.addAll(List.of(timeRegistration1, timeRegistration2));
     }
 }
