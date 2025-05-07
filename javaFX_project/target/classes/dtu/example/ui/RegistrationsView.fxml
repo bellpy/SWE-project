@@ -19,14 +19,22 @@
       <TableColumn text="Edit"        prefWidth="80.0"  fx:id="editColumn"/>
     </columns>
   </TableView>
-  
+
+  <Label text="Hours Worked:"
+  layoutX="24.0" layoutY="320.0"/>
+<TextField fx:id="hoursWorkedField"
+      layoutX="120.0" layoutY="315.0"
+      prefWidth="100.0"/>
+
+<Label text="Days Ago:"
+  layoutX="240.0" layoutY="320.0"/>
+<TextField fx:id="daysAgoField"
+      layoutX="310.0" layoutY="315.0"
+      prefWidth="100.0"/>
+      
   <!-- Button to add a new registration -->
   <Button text="Register time"
-          layoutX="24.0" layoutY="330.0"
+          layoutX="24.0" layoutY="350.0"
           onAction="#onRegisterTime"/>
   
-  <!-- Back button -->
-  <Button text="Back to projects"
-          layoutX="120.0" layoutY="330.0"
-          onAction="#onBackToProjects"/>
 </AnchorPane>
