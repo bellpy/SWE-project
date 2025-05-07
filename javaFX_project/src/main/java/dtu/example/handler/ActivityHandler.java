@@ -18,6 +18,22 @@ public class ActivityHandler {
         dbContext.activities.add(activity);
     }
 
+    public List<Activity> getAllUserActivities(String userInitials) {
+        return dbContext.activities.stream()
+                .filter(activity -> activity.getUserInitials().contains(userInitials))
+                .toList();
+    }
+
+    public void assignUserToActivity(int activityNumber, String userInitials) {
+        Activity activity = dbContext.activities.stream()
+                .filter(a -> a.getNumber() == activityNumber)
+                .findFirst()
+                .orElse(null);
+        if (activity != null) {
+            activity.addUserInitials(userInitials);
+        }
+    }
+
     public List<Activity> getActivitiesByProjectNumber(long projectNumber) {
         return dbContext.activities.stream()
                 .filter(activity -> activity.getProjectNumber() == projectNumber)

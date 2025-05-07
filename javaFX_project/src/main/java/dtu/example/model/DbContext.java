@@ -18,7 +18,8 @@ public class DbContext {
 
     public void initializeData() {
         User user1 = new User("AB");
-        this.users.add(user1);
+        User huba = new User("huba");
+        this.users.addAll(List.of(user1, huba));
 
         Project project1 = new Project("Project1", 1);
         project1.addManagers(new ArrayList<>(List.of("AB")));
@@ -30,6 +31,7 @@ public class DbContext {
 
         Activity activity1 = new Activity(1, "Development", project1.getId()); // projectNumber, name, activityNumber
         activity1.addUserInitials(user1.initials);
+        activity1.addUserInitials(huba.initials);
         this.activities.add(activity1);
     }
 }
