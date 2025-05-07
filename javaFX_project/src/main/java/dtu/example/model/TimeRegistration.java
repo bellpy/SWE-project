@@ -24,7 +24,7 @@ public class TimeRegistration {
         return this.activityNumber;
     }
 
-    public double getHoursWorked() {
+    public double getHours() {
         return this.hoursWorked;
     }
 

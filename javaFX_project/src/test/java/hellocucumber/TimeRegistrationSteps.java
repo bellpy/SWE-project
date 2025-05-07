@@ -73,7 +73,7 @@ public class TimeRegistrationSteps {
     @Then("the dbContext contains the time registration for activity {int} with hours {int}")
     public void theDbContextContainsTheTimeRegistrationForActivityWithHours(Integer int1, Integer int2) {
         TimeRegistration timeRegistration = dbContext.timeRegistrations.stream()
-                .filter(tr -> tr.getActivityNumber() == int1 && tr.getHoursWorked() == int2)
+                .filter(tr -> tr.getActivityNumber() == int1 && tr.getHours() == int2)
                 .findFirst()
                 .orElse(null);
         assertNotNull(timeRegistration, "Time registration should exist in dbContext");

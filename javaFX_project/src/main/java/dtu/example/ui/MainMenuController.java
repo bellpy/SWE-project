@@ -202,6 +202,8 @@ public class MainMenuController {
 
     @FXML
     private void initialize() {
+        setupActivitySelectionListener();
+        setupProjectSelectionListener();
         // initialsLabel.setText("Welcome, " + userInitials);
     }
 
@@ -210,6 +212,42 @@ public class MainMenuController {
             getProject();
             getUserActivities();
         }
+    }
+
+    private void setupActivitySelectionListener() {
+        yourActivitiesListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                Activity selectedActivity = activityHandler.getAllUserActivities(userInitials)
+                    .stream()
+                    .filter(activity -> activity.getName().equals(newValue))
+                    .findFirst()
+                    .orElse(null);
+    
+                if (selectedActivity != null) {
+                    try {
+                        FXMLLoader loader = new FXMLLoader(App.class.getResource("RegistrationsView.fxml"));
+                        Parent registrationView = loader.load();
+    
+                        RegistrationsController controller = loader.getController();
+                        controller.init(dbContext, userInitials, () -> {
+                            try {
+                                Parent mainMenuView = App.loadFXML("mainMenu");
+                                Scene mainMenuScene = new Scene(mainMenuView);
+                                App.getPrimaryStage().setScene(mainMenuScene);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                        controller.loadFor(selectedActivity);
+    
+                        Scene registrationScene = new Scene(registrationView);
+                        App.getPrimaryStage().setScene(registrationScene);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
 }
