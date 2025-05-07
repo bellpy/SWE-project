@@ -67,6 +67,19 @@ public class MainMenuController {
         setupProjectSelectionListener();
     }
 
+    public void getUserActivities() {
+        if (activityHandler != null && userInitials != null) {
+            // Fetch activities assigned to the user
+            ObservableList<String> userActivities = FXCollections.observableArrayList();
+            activityHandler.getAllUserActivities(userInitials).forEach(activity -> {
+                userActivities.add(activity.getName()); // Add activity names to the list
+            });
+    
+            // Populate the ListView for "Your Activities"
+            yourActivitiesListView.setItems(userActivities);
+        }
+    }
+
     private void setupProjectSelectionListener() {
         // Makes it load the projects faster
         projectsListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -103,7 +116,7 @@ public class MainMenuController {
         // Bind the TableColumn to the name property
         activityNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         activityEmployeesColoumn.setCellValueFactory(new PropertyValueFactory<>("userInitialsAsString"));
-    
+
         // Bind the ObservableList to the TableView
         activitiesTableView.setItems(activities);
     }
@@ -122,16 +135,16 @@ public class MainMenuController {
     private void openCreateProjectPopup() throws IOException {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("createProject.fxml"));
         Parent popupContent = loader.load();
-    
+
         CreateProjectController controller = loader.getController();
         controller.setDbContext(dbContext);
-    
+
         Stage popupStage = new Stage();
         popupStage.setTitle("Create Project");
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.setScene(new Scene(popupContent));
         popupStage.showAndWait();
-    
+
         // Refresh project list
         getProject();
     }
@@ -166,6 +179,7 @@ public class MainMenuController {
         refreshActivities();
     }
 
+<<<<<<< HEAD
     public void refreshActivities() {
         Project selectedProject = getSelectedProject();
         if (selectedProject != null) {
@@ -175,6 +189,9 @@ public class MainMenuController {
     }
     
     //everything for activities 
+=======
+    // everything for activities
+>>>>>>> origin/main
     @FXML
     private TableView<Activity> activitiesTableView; // TableView for activities
     @FXML
@@ -185,6 +202,9 @@ public class MainMenuController {
     private ObservableList<Activity> activities = FXCollections.observableArrayList(); // ObservableList for activities
 
     @FXML
+    private ListView<String> yourActivitiesListView; // Add this field for "Your Activities"
+
+    @FXML
     private void initialize() {
         // initialsLabel.setText("Welcome, " + userInitials);
     }
@@ -192,6 +212,7 @@ public class MainMenuController {
     public void onDbContextSet() {
         if (dbContext != null) {
             getProject();
+            getUserActivities();
         }
     }
 
