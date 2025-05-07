@@ -20,8 +20,8 @@ public class DbContext {
         User user1 = new User("AB");
         User huba = new User("huba");
         this.users.addAll(List.of(user1, huba));
-        Project project1 = new Project("Project1", 1);
         
+        Project project1 = new Project("Project1", 1);
         project1.addManagers(new ArrayList<>(List.of("AB")));
         
         Project project2 = new Project("Project2", 2);
