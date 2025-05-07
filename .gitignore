@@ -1,11 +1,5 @@
 # === Build artifacts ===
 /target/
 
-
-#Include everything in the target directory
-target/**
-!/target/
-/javaFX_project/target/**
-
 # Compiled class files
 *.class
