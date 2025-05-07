@@ -171,12 +171,13 @@ public class MainMenuController {
             return;
         }
 
-        FXMLLoader loader = new FXMLLoader(App.class.getResource("createActivity.fxml"));
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("activity.fxml"));
         Parent popupContent = loader.load();
 
-        CreateActivityController controller = loader.getController();
+        ActivityController controller = loader.getController();
         controller.setDbContext(dbContext);
         controller.setProjectNumber(selectedProject.getId());
+        
 
         Stage popupStage = new Stage();
         popupStage.setTitle("Create Activity");
@@ -186,6 +187,25 @@ public class MainMenuController {
 
         refreshActivities();
     }
+
+    private void openEditActivityPopup(Activity activity) throws IOException {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("activity.fxml"));
+        Parent popupContent = loader.load();
+    
+        ActivityController controller = loader.getController();
+        controller.setDbContext(dbContext);
+        controller.setProjectNumber(activity.getProjectNumber());
+        controller.setActivityToEdit(activity);
+    
+        Stage popupStage = new Stage();
+        popupStage.setTitle("Edit Activity");
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        popupStage.setScene(new Scene(popupContent));
+        popupStage.showAndWait();
+    
+        refreshActivities();
+    }
+    
 
     public void refreshActivities() {
         Project selectedProject = getSelectedProject();
@@ -216,7 +236,16 @@ public class MainMenuController {
 
     @FXML
     private void initialize() {
-        // initialsLabel.setText("Welcome, " + userInitials);
+        activitiesTableView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2 && !activitiesTableView.getSelectionModel().isEmpty()) {
+                Activity selectedActivity = activitiesTableView.getSelectionModel().getSelectedItem();
+                try {
+                    openEditActivityPopup(selectedActivity);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     public void onDbContextSet() {
