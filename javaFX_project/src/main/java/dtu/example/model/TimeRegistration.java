@@ -1,12 +1,15 @@
 package dtu.example.model;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 public class TimeRegistration {
     private String userInitials;
     private int activityNumber;
     private double hoursWorked;
-    private String date;
+    private LocalDate date;
 
-    public TimeRegistration(String userInitials, int activityNumber, double hoursWorked, String date) {
+    public TimeRegistration(String userInitials, int activityNumber, double hoursWorked, LocalDate date) {
         this.userInitials = userInitials;
         this.activityNumber = activityNumber;
         this.hoursWorked = hoursWorked;
@@ -21,11 +24,11 @@ public class TimeRegistration {
         return this.activityNumber;
     }
 
-    public double getHoursWorked() {
+    public double getHours() {
         return this.hoursWorked;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return this.date;
     }
 
