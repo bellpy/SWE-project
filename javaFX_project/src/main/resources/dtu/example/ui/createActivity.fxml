@@ -25,8 +25,8 @@
       <Text layoutX="68.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Assign employees" />
       <Text layoutX="62.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estimated hours" />
       <TextField fx:id="startWeekField" layoutX="61.0" layoutY="134.0" prefHeight="24.0" prefWidth="95.0" />
-      <TextField fx:id="endWeekField" layoutX="62.0" layoutY="200.0" prefHeight="24.0" prefWidth="207.0" />
+      <TextField fx:id="estimatedHoursField" layoutX="62.0" layoutY="200.0" prefHeight="24.0" prefWidth="207.0" />
       <Text layoutX="176.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End week" />
-      <TextField fx:id="estimatedHoursField" layoutX="176.0" layoutY="134.0" prefHeight="24.0" prefWidth="95.0" />
+      <TextField fx:id="endWeekField" layoutX="176.0" layoutY="134.0" prefHeight="24.0" prefWidth="95.0" />
    </children>
 </Pane>

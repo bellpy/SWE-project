@@ -49,19 +49,41 @@ public class CreateActivityController {
         
         submitButton.setOnAction(e -> {
             String title = titleField.getText();
+            String startWeekText = startWeekField.getText();
+            String endWeekText = endWeekField.getText();
+            String estimatedHoursText = estimatedHoursField.getText();
+
         
-            if (!title.isBlank()) {
-                int activityNumber = dbContext.activities.size() + 1;
-                long projectNumber = this.projectNumber;
-                Activity activity = new Activity(activityNumber, title, projectNumber);
-                for (String employee : employees) {
-                    activity.addUserInitials(employee);
-                }
-                dbContext.activities.add(activity);
-        
-                Stage stage = (Stage) submitButton.getScene().getWindow();
-                stage.close();
+            if (title.isBlank() || startWeekText.isBlank() || endWeekText.isBlank() || estimatedHoursText.isBlank()) {
+                // Show alert if any required field is empty
+                javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.WARNING);
+                alert.setTitle("Missing Fields");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill in title, start week, end week and estimated hours.");
+                alert.showAndWait();
+                return;
             }
+        
+            int startWeek = Integer.parseInt(startWeekText);
+            int endWeek = Integer.parseInt(endWeekText);
+            int estimatedHours = Integer.parseInt(estimatedHoursText);
+    
+            int activityNumber = dbContext.activities.size() + 1;
+            long projectNumber = this.projectNumber;
+            
+            Activity activity = new Activity(activityNumber, title, projectNumber);
+            activity.setStartWeek(startWeek);
+            activity.setEndWeek(endWeek);
+            activity.setEstimatedHours(estimatedHours);
+    
+            for (String employee : employees) {
+                activity.addUserInitials(employee);
+            }
+    
+            dbContext.activities.add(activity);
+    
+            Stage stage = (Stage) submitButton.getScene().getWindow();
+            stage.close();
         });
     }
 }

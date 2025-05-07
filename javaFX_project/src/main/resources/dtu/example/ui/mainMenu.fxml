@@ -46,7 +46,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.layout.StackPane?>
 
-<VBox prefHeight="400.0" prefWidth="660.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dtu.example.ui.MainMenuController">
+<VBox prefHeight="450.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dtu.example.ui.MainMenuController">
   <children>
     <MenuBar VBox.vgrow="NEVER" />
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="399.0" prefWidth="632.0" VBox.vgrow="ALWAYS">
@@ -56,15 +56,15 @@
             <Font size="18.0" />
           </font>
         </Label>
-            <SplitPane dividerPositions="0.31504702194357365" layoutY="-3.0" prefHeight="399.0" prefWidth="660.0">
+            <SplitPane dividerPositions="0.2451989455246474" layoutY="-3.0" prefHeight="459.0" prefWidth="753.0">
               <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="397.0" prefWidth="181.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="387.0" prefWidth="181.0">
                      <children>
-                        <TabPane layoutY="30.0" prefHeight="371.0" prefWidth="204.0" tabClosingPolicy="UNAVAILABLE">
+                        <TabPane layoutY="59.0" prefHeight="400.0" prefWidth="188.0" tabClosingPolicy="UNAVAILABLE">
                           <tabs>
                             <Tab text="Projects">
                                  <content>
-                                    <ListView fx:id="projectsListView" prefHeight="339.0" prefWidth="215.0" />
+                                    <ListView fx:id="projectsListView" prefHeight="398.0" prefWidth="117.0" />
                                  </content>
                               </Tab>
                             <Tab text="Your activities">
@@ -74,7 +74,17 @@
                               </Tab>
                           </tabs>
                         </TabPane>
-                        <Button layoutX="-4.0" mnemonicParsing="false" onAction="#openCreateProjectPopup" prefHeight="31.0" prefWidth="211.0" text="Create project" />
+                        <Button layoutX="-4.0" layoutY="28.0" mnemonicParsing="false" onAction="#openCreateProjectPopup" prefHeight="33.0" prefWidth="188.0" text="Create project" />
+                        <Label layoutX="14.0" layoutY="9.0" text="Current user:">
+                           <font>
+                              <Font name="System Bold Italic" size="11.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="currentUserLabel" layoutX="101.0" layoutY="9.0" prefHeight="14.0" prefWidth="61.0" text="    ">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="397.0" prefWidth="566.0">
@@ -89,12 +99,11 @@
                                                  <children>
                                                      <TableView fx:id="activitiesTableView" layoutX="24.0" layoutY="124.0" prefHeight="248.0" prefWidth="397.0">
                                                          <columns>
-                                                             <TableColumn fx:id="activityNameColumn" prefWidth="74.7370491027832" sortable="false" text="Activity" />
-                                                             <TableColumn fx:id="activityEmployeesColoumn" prefWidth="91.57928466796875" sortable="false" text="Employees" />
-                                                             <TableColumn prefWidth="90.52653503417969" sortable="false" text="Start date" />
-                                                             <TableColumn prefWidth="81.05291748046875" sortable="false" text="End date" />
-                                                             <TableColumn prefWidth="57.36859892095481" sortable="false" text="Edit" />
-                                                         </columns>
+                                                          <TableColumn fx:id="activityNameColumn" prefWidth="115.78985595703125" sortable="false" text="Acitivity" />
+                                                          <TableColumn fx:id="activityEmployeesColoumn" prefWidth="105.26348876953125" sortable="false" text="Employees" />
+                                                            <TableColumn fx:id="startWeekColumn" prefWidth="107.89501953125" sortable="false" text="Start Week" />
+                                                            <TableColumn fx:id="endWeekColumn" prefWidth="90.00030517578125" sortable="false" text="End Week" />
+                                                            <TableColumn fx:id="estimatedHoursColumn" prefWidth="92.10558812044872" sortable="false" text="Hours" /></columns>
                                                      </TableView>
                                                      <Label fx:id="projectNameLabel" layoutX="24.0" layoutY="23.0" text="*Project name*">
                                                          <font>
