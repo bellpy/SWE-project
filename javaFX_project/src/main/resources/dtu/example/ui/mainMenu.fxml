@@ -66,7 +66,7 @@
                                     <ListView fx:id="projectsListView" prefHeight="339.0" prefWidth="215.0" />
                                  </content>
                               </Tab>
-                            <Tab text="Activities">
+                            <Tab text="Your activities">
                                  <content>
                                     <ListView prefHeight="200.0" prefWidth="200.0" />
                                  </content>
