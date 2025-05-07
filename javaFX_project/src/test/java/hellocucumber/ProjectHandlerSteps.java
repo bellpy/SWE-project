@@ -28,7 +28,7 @@ public class ProjectHandlerSteps {
     @Then("the dbContext contains the project {string}")
     public void theDbContextContainsTheProject(String string) {
         Project createdProject = dbContext.projects.stream()
-                .filter(p -> p.name.equals(string))
+                .filter(p -> p.getName().equals(string))
                 .findFirst().get();
         assertNotNull(createdProject);
     }

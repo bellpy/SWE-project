@@ -37,6 +37,10 @@ public class MainMenuController {
     private ListView<String> projectsListView; // Add this field and annotate it with @FXML
     @FXML
     private Label projectNameLabel;
+    @FXML
+    private Label projectLeadLabel;
+    @FXML
+    private Label projectDateLabel;
 
     public void setDbContext(DbContext dbContext) {
         this.dbContext = dbContext;
@@ -80,6 +84,8 @@ public class MainMenuController {
                         projectNameLabel.setText(selectedProject.getName());
                         var allActivities = activityHandler.getActivitiesByProjectNumber(selectedProject.getId());
                         activities.setAll(allActivities);
+                        projectLeadLabel.setText(selectedProject.getManagersAsString());
+                        projectDateLabel.setText(selectedProject.getDateCreated().toString());
                         setupActivitiesTable();
                     }
                 });
@@ -114,13 +120,20 @@ public class MainMenuController {
 
     @FXML
     private void openCreateProjectPopup() throws IOException {
-        Parent popupContent = App.loadFXML("createProject"); // ← reuse App's loadFXML method!
-
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("createProject.fxml"));
+        Parent popupContent = loader.load();
+    
+        CreateProjectController controller = loader.getController();
+        controller.setDbContext(dbContext);
+    
         Stage popupStage = new Stage();
         popupStage.setTitle("Create Project");
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.setScene(new Scene(popupContent));
         popupStage.showAndWait();
+    
+        // Refresh project list
+        getProject();
     }
 
     @FXML
@@ -148,11 +161,6 @@ public class MainMenuController {
     @FXML
     private void initialize() {
         // initialsLabel.setText("Welcome, " + userInitials);
-    }
-
-    @FXML
-    private void switchToPrimary() throws IOException {
-        App.setRoot("login");
     }
 
     public void onDbContextSet() {

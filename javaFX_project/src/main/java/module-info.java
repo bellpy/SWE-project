@@ -4,5 +4,6 @@ module hellofx {
  
     opens dtu.example.model to javafx.base; // Allow JavaFX to access Activity properties
     exports dtu.example.ui;
+    exports dtu.example.model;
     opens dtu.example.ui to javafx.fxml;
 }

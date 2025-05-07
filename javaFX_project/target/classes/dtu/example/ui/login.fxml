@@ -30,7 +30,7 @@
             </HBox>
             <VBox alignment="BOTTOM_CENTER" prefHeight="84.0" prefWidth="360.0">
                <children>
-                    <Button fx:id="secondaryButton" onAction="#switchToSecondary" text="Login">
+                    <Button fx:id="secondaryButton" onAction="#switchToMainMenu" text="Login">
                      <font>
                         <Font size="16.0" />
                      </font>

@@ -17,7 +17,7 @@ public class LoginController {
     private TextField initialsField;
 
     @FXML
-    private void switchToSecondary() throws IOException {
+    private void switchToMainMenu() throws IOException {
     String initials = initialsField.getText();
     dbContext = new DbContext(); 
     FXMLLoader loader = new FXMLLoader(App.class.getResource("mainMenu.fxml"));
