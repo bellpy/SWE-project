@@ -138,16 +138,42 @@ public class MainMenuController {
 
     @FXML
     private void openCreateActivityPopup() throws IOException {
-        Parent popupContent = App.loadFXML("createActivity"); // ← reuse App's loadFXML method!
+        Project selectedProject = getSelectedProject();
+
+        if (selectedProject == null) {
+            // Show alert box
+            javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.WARNING);
+            alert.setTitle("No Project Selected");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a project before creating an activity.");
+            alert.showAndWait();
+            return;
+        }
+
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("createActivity.fxml"));
+        Parent popupContent = loader.load();
+
+        CreateActivityController controller = loader.getController();
+        controller.setDbContext(dbContext);
+        controller.setProjectNumber(selectedProject.getId());
 
         Stage popupStage = new Stage();
         popupStage.setTitle("Create Activity");
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.setScene(new Scene(popupContent));
         popupStage.showAndWait();
+
+        refreshActivities();
     }
 
-
+    public void refreshActivities() {
+        Project selectedProject = getSelectedProject();
+        if (selectedProject != null) {
+            var updatedActivities = activityHandler.getActivitiesByProjectNumber(selectedProject.getId());
+            activities.setAll(updatedActivities);
+        }
+    }
+    
     //everything for activities 
     @FXML
     private TableView<Activity> activitiesTableView; // TableView for activities

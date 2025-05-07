@@ -2,6 +2,7 @@ package hellocucumber;
 
 import io.cucumber.java.en.*;
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.Arrays;
 
 import dtu.example.handler.ActivityHandler;
 import dtu.example.model.DbContext;
