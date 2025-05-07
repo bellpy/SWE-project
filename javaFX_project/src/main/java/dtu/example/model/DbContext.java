@@ -45,5 +45,31 @@ public class DbContext {
         TimeRegistration timeRegistration1 = new TimeRegistration(huba.initials, activity1.getNumber(), 8, date.minusDays(1));
         TimeRegistration timeRegistration2 = new TimeRegistration(huba.initials, activity2.getNumber(), 4, date.minusDays(2));
         this.timeRegistrations.addAll(List.of(timeRegistration1, timeRegistration2));
+        initializeAbsences();
+    }
+
+    private void initializeAbsences(){
+        User user = new User("Boss");
+
+        Project abscenceProject = new Project("Abscences", 0);
+        abscenceProject.addManagers(new ArrayList<>(List.of(user.initials)));
+
+        List<String> userInitials = this.users.stream()
+                .map(User::getInitials)
+                .toList();
+
+        this.projects.add(abscenceProject);
+        Activity abscence1 = new Activity( "Vacation", abscenceProject.getId());
+        abscence1.setAllUserInitials(userInitials);
+        Activity abscence2 = new Activity( "Sickness", abscenceProject.getId());
+        abscence2.setAllUserInitials(userInitials);
+        Activity abscence3 = new Activity( "Course", abscenceProject.getId());
+        abscence3.setAllUserInitials(userInitials);
+        Activity abscence4 = new Activity( "Emergency", abscenceProject.getId()); 
+        abscence4.setAllUserInitials(userInitials);
+        Activity abscence5 = new Activity( "Personal", abscenceProject.getId());
+        abscence5.setAllUserInitials(userInitials);
+        
+        this.activities.addAll(List.of(abscence1, abscence2, abscence3, abscence4, abscence5));
     }
 }

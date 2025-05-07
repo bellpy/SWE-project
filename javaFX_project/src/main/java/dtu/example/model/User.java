@@ -14,6 +14,10 @@ public class User {
         return MAX_CAPACITY - numberOfAssignedActivities;
     }
 
+    public String getInitials() {
+        return initials;
+    }
+
     public void assignActivity() {
         numberOfAssignedActivities++;
     }
