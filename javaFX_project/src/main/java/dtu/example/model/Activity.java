@@ -38,6 +38,10 @@ public class Activity {
         return this.activityName;
     }
 
+    public void setName(String name) {
+        this.activityName = name;
+    }
+
     public void setEstimatedHours(int estimatedHours) {
         this.estimatedHours = estimatedHours;
     }
@@ -72,6 +76,10 @@ public class Activity {
 
     public String getUserInitialsAsString() {
         return String.join(", ", this.userInitials); // Convert list to comma-separated string
+    }
+    
+    public void removeUserInitial(String userInitial) {
+        this.userInitials.remove(userInitial);
     }
 
     public int getStartWeek() {
