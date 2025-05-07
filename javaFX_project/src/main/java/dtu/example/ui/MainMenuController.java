@@ -179,7 +179,6 @@ public class MainMenuController {
         refreshActivities();
     }
 
-<<<<<<< HEAD
     public void refreshActivities() {
         Project selectedProject = getSelectedProject();
         if (selectedProject != null) {
@@ -189,9 +188,6 @@ public class MainMenuController {
     }
     
     //everything for activities 
-=======
-    // everything for activities
->>>>>>> origin/main
     @FXML
     private TableView<Activity> activitiesTableView; // TableView for activities
     @FXML
