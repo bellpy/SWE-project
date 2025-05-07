@@ -47,7 +47,6 @@
 <?import javafx.scene.layout.StackPane?>
 
 <VBox prefHeight="450.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dtu.example.ui.MainMenuController">
-<VBox prefHeight="450.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dtu.example.ui.MainMenuController">
   <children>
     <MenuBar VBox.vgrow="NEVER" />
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="399.0" prefWidth="632.0" VBox.vgrow="ALWAYS">
@@ -58,17 +57,13 @@
           </font>
         </Label>
             <SplitPane dividerPositions="0.2451989455246474" layoutY="-3.0" prefHeight="459.0" prefWidth="753.0">
-            <SplitPane dividerPositions="0.2451989455246474" layoutY="-3.0" prefHeight="459.0" prefWidth="753.0">
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="387.0" prefWidth="181.0">
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="387.0" prefWidth="181.0">
                      <children>
-                        <TabPane layoutY="59.0" prefHeight="400.0" prefWidth="188.0" tabClosingPolicy="UNAVAILABLE">
                         <TabPane layoutY="59.0" prefHeight="400.0" prefWidth="188.0" tabClosingPolicy="UNAVAILABLE">
                           <tabs>
                             <Tab text="Projects">
                                  <content>
-                                    <ListView fx:id="projectsListView" prefHeight="398.0" prefWidth="117.0" />
                                     <ListView fx:id="projectsListView" prefHeight="398.0" prefWidth="117.0" />
                                  </content>
                               </Tab>

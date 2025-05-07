@@ -27,8 +27,6 @@ public class DbContext {
 
         //Projects
         Project project1 = new Project("Project1", 1);
-        
-        Project project1 = new Project("Project1", 1);
         project1.addManagers(new ArrayList<>(List.of("AB")));
         Project project2 = new Project("Project2", 2);
         project2.addManagers(new ArrayList<>(List.of("CD")));
