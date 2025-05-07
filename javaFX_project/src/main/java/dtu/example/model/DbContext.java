@@ -45,6 +45,7 @@ public class DbContext {
         TimeRegistration timeRegistration1 = new TimeRegistration(huba.initials, activity1.getNumber(), 8, date.minusDays(1));
         TimeRegistration timeRegistration2 = new TimeRegistration(huba.initials, activity2.getNumber(), 4, date.minusDays(2));
         this.timeRegistrations.addAll(List.of(timeRegistration1, timeRegistration2));
+        
         initializeAbsences();
     }
 
@@ -69,7 +70,7 @@ public class DbContext {
         abscence4.setAllUserInitials(userInitials);
         Activity abscence5 = new Activity( "Personal", abscenceProject.getId());
         abscence5.setAllUserInitials(userInitials);
-        
+
         this.activities.addAll(List.of(abscence1, abscence2, abscence3, abscence4, abscence5));
     }
 }
