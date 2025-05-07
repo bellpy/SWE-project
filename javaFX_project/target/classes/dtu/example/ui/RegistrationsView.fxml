@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane xmlns="http://javafx.com/javafx/22"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="dtu.example.ui.RegistrationsController"
+            prefWidth="566.0" prefHeight="397.0">
+  <!-- Title showing which activity we’re looking at -->
+  <Label fx:id="registrationTitleLabel"
+         layoutX="24.0" layoutY="23.0"
+         font="$x1" text="Registrations on: …"/>
+  
+  <!-- The table of existing time registrations -->
+  <TableView fx:id="registrationsTableView"
+             layoutX="24.0" layoutY="60.0"
+             prefWidth="500" prefHeight="250">
+    <columns>
+      <TableColumn text="Date"        prefWidth="200.0" fx:id="dateColumn"/>
+      <TableColumn text="Hours"       prefWidth="100.0" fx:id="hoursColumn"/>
+      <TableColumn text="Edit"        prefWidth="80.0"  fx:id="editColumn"/>
+    </columns>
+  </TableView>
+  
+  <!-- Button to add a new registration -->
+  <Button text="Register time"
+          layoutX="24.0" layoutY="330.0"
+          onAction="#onRegisterTime"/>
+  
+  <!-- Back button -->
+  <Button text="Back to projects"
+          layoutX="120.0" layoutY="330.0"
+          onAction="#onBackToProjects"/>
+</AnchorPane>
