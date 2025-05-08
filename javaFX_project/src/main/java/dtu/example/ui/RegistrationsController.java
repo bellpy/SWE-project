@@ -2,7 +2,9 @@ package dtu.example.ui;
 
 import dtu.example.model.Activity;
 import dtu.example.model.DbContext;
+import dtu.example.model.Project;
 import dtu.example.model.TimeRegistration;
+import dtu.example.handler.ProjectHandler;
 import dtu.example.handler.TimeRegistrationHandler;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -28,11 +30,15 @@ public class RegistrationsController {
     private TextField hoursWorkedField;
     @FXML
     private TextField daysAgoField;
+    @FXML
+    private Label projectTitleLabel;
 
     private DbContext dbContext;
     private int currentActivityId;
     private String userInitials;
     private Runnable backHandler;
+    private ProjectHandler projectHandler;
+
 
     private TimeRegistrationHandler registrationHandler;
 
@@ -42,6 +48,7 @@ public class RegistrationsController {
         this.userInitials = userInitials;
         this.backHandler = onBack;
         this.registrationHandler = new TimeRegistrationHandler(dbContext);
+        this.projectHandler = new ProjectHandler(dbContext);
 
         // wire up the table columns
         dateColumn.setCellValueFactory(
@@ -51,15 +58,22 @@ public class RegistrationsController {
         // … etc
     }
 
-    /** Populate UI for the given activity */
     public void loadFor(Activity activity) {
         registrationTitleLabel.setText("Registrations on: " + activity.getName());
-        List<TimeRegistration> regs = registrationHandler.getTimeRegistrationsByUserAndActivityNumber(userInitials,
-                activity.getNumber());
+    
+        Project project = projectHandler.getProjectById(activity.getProjectNumber());
+        if (project != null) {
+            projectTitleLabel.setText("Project: " + project.getName());
+        } else {
+            projectTitleLabel.setText("Project: (not found)");
+        }
+    
+        List<TimeRegistration> regs = registrationHandler.getTimeRegistrationsByUserAndActivityNumber(
+                userInitials, activity.getNumber());
         currentActivityId = activity.getNumber();
-        registrationsTableView.setItems(
-                FXCollections.observableList(regs));
+        registrationsTableView.setItems(FXCollections.observableList(regs));
     }
+    
 
     private void createRegistration() {
         try {

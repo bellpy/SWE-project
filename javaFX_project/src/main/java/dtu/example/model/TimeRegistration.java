@@ -31,5 +31,4 @@ public class TimeRegistration {
     public LocalDate getDate() {
         return this.date;
     }
-
 }
