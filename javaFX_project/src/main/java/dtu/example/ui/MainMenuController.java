@@ -8,6 +8,7 @@ import dtu.example.model.Activity;
 import dtu.example.model.DbContext;
 import dtu.example.model.Project;
 import dtu.example.handler.ProjectHandler;
+import dtu.example.handler.ReportHandler;
 import dtu.example.handler.ActivityHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,6 +17,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
@@ -30,6 +33,7 @@ public class MainMenuController {
     DbContext dbContext;
     ProjectHandler projectHandler;
     ActivityHandler activityHandler;
+    ReportHandler reportHandler;
 
     private Map<String, Long> projectNameToIdMap = new HashMap<>();
 
@@ -60,6 +64,7 @@ public class MainMenuController {
     public void getProject() {
         projectHandler = new ProjectHandler(dbContext);
         activityHandler = new ActivityHandler(dbContext);
+        reportHandler = new ReportHandler(dbContext);
         // Convert List<Project> to List<String> (e.g., project names) and populate the
         // map
         ObservableList<String> projects = FXCollections.observableArrayList();
@@ -321,6 +326,32 @@ public class MainMenuController {
             e.printStackTrace();
         }
     }
+
+    public void generateReport() {
+        // Get the selected project (assuming you have a way to get it)
+        Project selectedProject = getSelectedProject();
+
+        if (selectedProject == null) {
+            // Show an alert if no project is selected
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("No Project Selected");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a project to generate a report.");
+            alert.showAndWait();
+            return;
+        }
+
+        // Generate and save the report
+        String filePath = reportHandler.generateAndSaveReport(selectedProject.getId());
+
+        // Show the file path in an alert box
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Report Generated");
+        alert.setHeaderText(null);
+        alert.setContentText("The report has been saved to:\n" + filePath);
+        alert.showAndWait();
+    }
+
     private void showProjectDetails() {
         // Show the project details pane
         detailsStackPane.getChildren().setAll(projectDetailsPane);
