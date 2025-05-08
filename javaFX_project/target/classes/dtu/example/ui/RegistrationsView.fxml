@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.*?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns="http://javafx.com/javafx/22"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="dtu.example.ui.RegistrationsController"
-            prefWidth="566.0" prefHeight="397.0">
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="450.0" prefWidth="566.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dtu.example.ui.RegistrationsController">
   <!-- Title showing which activity we’re looking at -->
-  <Label fx:id="registrationTitleLabel"
-         layoutX="24.0" layoutY="23.0" text="Registrations on: …"/>
+  <Label fx:id="registrationTitleLabel" layoutX="31.0" layoutY="40.0" text="Registrations on: …">
+      <font>
+         <Font size="20.0" />
+      </font></Label>
   
   <!-- The table of existing time registrations -->
-  <TableView fx:id="registrationsTableView"
-             layoutX="24.0" layoutY="60.0"
-             prefWidth="500" prefHeight="250">
+  <TableView fx:id="registrationsTableView" layoutX="33.0" layoutY="107.0" prefHeight="250" prefWidth="505.0">
     <columns>
-      <TableColumn text="Date"        prefWidth="200.0" fx:id="dateColumn"/>
-      <TableColumn text="Hours"       prefWidth="100.0" fx:id="hoursColumn"/>
-      <TableColumn text="Edit"        prefWidth="80.0"  fx:id="editColumn"/>
+      <TableColumn fx:id="dateColumn" prefWidth="256.3166103363037" text="Date" />
+      <TableColumn fx:id="hoursColumn" prefWidth="255.26400756835938" text="Hours" />
     </columns>
   </TableView>
 
-  <Label text="Hours Worked:"
-  layoutX="24.0" layoutY="320.0"/>
-<TextField fx:id="hoursWorkedField"
-      layoutX="120.0" layoutY="315.0"
-      prefWidth="100.0"/>
+  <Label layoutX="33.0" layoutY="377.0" text="Hours Worked:" />
+<TextField fx:id="hoursWorkedField" layoutX="139.0" layoutY="372.0" prefWidth="100.0" />
 
-<Label text="Days Ago:"
-  layoutX="240.0" layoutY="320.0"/>
-<TextField fx:id="daysAgoField"
-      layoutX="310.0" layoutY="315.0"
-      prefWidth="100.0"/>
+<Label layoutX="261.0" layoutY="378.0" text="Days Ago:" />
+<TextField fx:id="daysAgoField" layoutX="331.0" layoutY="373.0" prefWidth="100.0" />
       
   <!-- Button to add a new registration -->
-  <Button text="Register time"
-          layoutX="24.0" layoutY="350.0"
-          onAction="#onRegisterTime"/>
+  <Button layoutX="28.0" layoutY="411.0" onAction="#onRegisterTime" text="Register time" />
+   <Label fx:id="projectTitleLabel" layoutX="33.0" layoutY="75.0" prefHeight="20.0" prefWidth="151.0" text="Project:">
+      <font>
+         <Font size="16.0" />
+      </font>
+   </Label>
   
 </AnchorPane>
