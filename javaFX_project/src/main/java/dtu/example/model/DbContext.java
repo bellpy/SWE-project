@@ -36,7 +36,9 @@ public class DbContext {
         Activity activity2 = new Activity(2, "Design", project1.getId()); // projectNumber, name, activityNumber
         activity1.addUserInitials(user1.initials);
         activity1.addUserInitials(huba.initials);
+        activity1.setEstimatedHours(50);
         activity2.addUserInitials(huba.initials);
+        activity2.setEstimatedHours(30);
         this.activities.addAll(List.of(activity1, activity2));
 
         // Time Registrations
