@@ -224,6 +224,7 @@ public class MainMenuController {
             var updatedActivities = activityHandler.getActivitiesByProjectNumber(selectedProject.getId());
             activities.setAll(updatedActivities);
         }
+        getUserActivities();
     }
 
     // everything for activities
