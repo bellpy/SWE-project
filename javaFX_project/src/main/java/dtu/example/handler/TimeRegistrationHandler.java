@@ -23,4 +23,11 @@ public class TimeRegistrationHandler {
                 .filter(tr -> tr.getUserInitials().equals(userInitials) && tr.getActivityNumber() == activityNumber)
                 .toList();
     }
+
+    public double getTotalRegisteredHoursByActivity(int activityNumber) {
+        return dbContext.timeRegistrations.stream()
+                .filter(tr -> tr.getActivityNumber() == activityNumber)
+                .mapToDouble(tr -> tr.getHours())
+                .sum();
+    }
 }

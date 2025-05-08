@@ -6,16 +6,20 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
+import dtu.example.model.Activity;
 import dtu.example.model.DbContext;
 
 public class ReportHandler {
-    DbContext dbContext;
+    private final ActivityHandler activityHandler;
+    private final TimeRegistrationHandler timeRegistrationHandler;
 
     private String filePath;
 
     public ReportHandler(DbContext dbContext) {
-        this.dbContext = dbContext;
+        this.activityHandler = new ActivityHandler(dbContext);
+        this.timeRegistrationHandler = new TimeRegistrationHandler(dbContext);
     }
 
     public String generateAndSaveReport(long projectNumber) {
@@ -26,15 +30,20 @@ public class ReportHandler {
 
     public String getProjectReport(long projectNumber) {
         StringBuilder report = new StringBuilder();
-        dbContext.activities.stream()
-                .filter(activity -> activity.getProjectNumber() == projectNumber)
-                .forEach(activity -> {
-                    report.append("Activity Number: ").append(activity.getNumber()).append("\n")
-                          .append("Activity Name: ").append(activity.getName()).append("\n")
-                          .append("Assigned Users: ").append(activity.getUserInitials()).append("\n\n");
-                });
-        var reportString = report.toString();
-        return reportString;
+        List<Activity> activities = activityHandler.getActivitiesByProjectNumber(projectNumber); // Use ActivityHandler
+
+        activities.forEach(activity -> {
+            double registeredHours = timeRegistrationHandler.getTotalRegisteredHoursByActivity(activity.getNumber()); // Use
+                                                                                                                      // TimeRegistrationHandler
+
+            report.append("Activity Number: ").append(activity.getNumber()).append("\n")
+                    .append("Activity Name: ").append(activity.getName()).append("\n")
+                    .append("Assigned Users: ").append(activity.getUserInitials()).append("\n")
+                    .append("Estimated Hours: ").append(activity.getEstimatedHours()).append("\n")
+                    .append("Registered Hours: ").append(registeredHours).append("\n\n");
+        });
+
+        return report.toString();
     }
 
     public void saveReportToFile(String report, long projectNumber) {
