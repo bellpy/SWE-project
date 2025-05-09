@@ -37,6 +37,15 @@ public class ProjectHandler {
                 .orElse(null);
     }
 
+    public String getProjectDetailsById(long id) {
+        Project project = getProjectById(id);
+        if (project != null) {
+            return project.getProjectDetails();
+        } else {
+            return "Project not found.";
+        }
+    }
+
     public List<Project> getAllProjects() {
         return dbContext.projects;
     }

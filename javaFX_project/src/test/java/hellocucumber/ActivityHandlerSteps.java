@@ -106,7 +106,20 @@ public class ActivityHandlerSteps {
     }
 
     @Then("the users {string} are returned")
-    public void theUsersAreReturned(String expectedUsers) {
-        assertEquals(expectedUsers, userInitials, "Retrieved users should match the expected users");
-    }
+public void theUsersAreReturned(String expectedUsers) {
+    List<String> expectedUserList = Arrays.asList(expectedUsers.split(", "));
+    List<String> actualUserList = Arrays.asList(userInitials.split(", "));
+    assertEquals(expectedUserList.size(), actualUserList.size(), "User count should match");
+    assertTrue(actualUserList.containsAll(expectedUserList), "Retrieved users should match the expected users");
+}
+
+@Then("the activity it is renamed in the database to {string}")
+public void theActivityItIsRenamedInTheDatabaseTo(String string) {
+    Activity updatedActivity = dbContext.activities.stream()
+            .filter(a -> a.getNumber() == activity.getNumber())
+            .findFirst()
+            .orElse(null);
+    assertNotNull(updatedActivity, "Updated activity should exist in the database");
+    assertEquals(string, updatedActivity.getName(), "Activity name should match the updated name");
+}
 }

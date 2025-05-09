@@ -4,6 +4,8 @@ import io.cucumber.java.en.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
+
 import dtu.example.handler.ProjectHandler;
 import dtu.example.model.DbContext;
 import dtu.example.model.Project;
@@ -55,4 +57,18 @@ public class ProjectHandlerSteps {
     public void noProjectIsRetrieved() {
         assertNull(retrievedProject);
     }
+    
+@Given("I create a new project with name {string} with manager {string}")
+public void iCreateANewProjectWithNameWithManager(String string, String string2) {
+    List<String> managerInitials = List.of(string2);
+    Project project = projectHandler.createProject(string, managerInitials);
+    projectId = project.getId();
+}
+
+@Then("the project details has {string}")
+public void theProjectDetailsHas(String string) {
+    String projectDetails = projectHandler.getProjectDetailsById(projectId);
+    assertNotNull(projectDetails, "Project details should not be null");
+    assertTrue(projectDetails.contains(string), "Project details should contain: " + string);
+}
 }

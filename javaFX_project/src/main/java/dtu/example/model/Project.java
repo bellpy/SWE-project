@@ -39,5 +39,16 @@ public class Project {
 
     public String getManagersAsString() {
         return String.join(", ", Managers);
-    }    
+    }
+
+    public String getProjectDetails() {
+        return String.format(
+            "Project Name: %s, ID: %d, Date Created: %s, Managers: %s",
+            name,
+            id,
+            getDateCreated().toString(),
+            getManagersAsString().isEmpty() ? "None" : getManagersAsString(),
+            getManagers().isEmpty() ? "None" : getManagers()
+        );
+    }
 }

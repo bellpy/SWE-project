@@ -8,6 +8,7 @@ public class User {
     public User(String initials) {
         this.initials = initials;
         this.numberOfAssignedActivities = 0;
+        calculateUserCapacity();
     }
 
     public int calculateUserCapacity() {
@@ -16,13 +17,5 @@ public class User {
 
     public String getInitials() {
         return initials;
-    }
-
-    public void assignActivity() {
-        numberOfAssignedActivities++;
-    }
-
-    public int getNumberOfAssignedActivities() {
-        return numberOfAssignedActivities;
     }
 }

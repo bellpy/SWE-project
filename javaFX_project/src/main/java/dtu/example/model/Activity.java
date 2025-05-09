@@ -53,10 +53,6 @@ public class Activity {
     public long getProjectNumber() {
         return this.projectNumber;
     }
-
-    public void setProjectNumber(long projectNumber) {
-        this.projectNumber = projectNumber;
-    }
     
     public List<String> getUserInitials() {
         return this.userInitials;

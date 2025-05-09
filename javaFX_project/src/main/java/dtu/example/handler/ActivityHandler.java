@@ -6,14 +6,15 @@ import dtu.example.model.Activity;
 import dtu.example.model.DbContext;
 
 public class ActivityHandler {
-    
+
     private DbContext dbContext;
 
     public ActivityHandler(DbContext dbContext) {
         this.dbContext = dbContext;
     }
-    
-    public int createActivity(long projectNumber, String name, int startWeek, int endWeek, int estimatedHours, List<String> userInitials) {
+
+    public int createActivity(long projectNumber, String name, int startWeek, int endWeek, int estimatedHours,
+            List<String> userInitials) {
         int activityNumber = getNextActivityNumber(projectNumber);
         Activity activity = new Activity(activityNumber, name, projectNumber);
         activity.setStartWeek(startWeek);
@@ -27,22 +28,23 @@ public class ActivityHandler {
     public void updateActivity(Activity activity) {
         // Assuming activity already has the updated data
         dbContext.activities.stream()
-            .filter(a -> a.getNumber() == activity.getNumber())
-            .findFirst()
-            .ifPresent(existingActivity -> {
-                existingActivity.setName(activity.getName());
-                existingActivity.setStartWeek(activity.getStartWeek());
-                existingActivity.setEndWeek(activity.getEndWeek());
-                existingActivity.setEstimatedHours(activity.getEstimatedHours());
-                existingActivity.getUserInitials().clear();
-                existingActivity.getUserInitials().addAll(activity.getUserInitials());
-            });
+                .filter(a -> a.getNumber() == activity.getNumber())
+                .findFirst()
+                .ifPresent(existingActivity -> {
+                    existingActivity.setName(activity.getName());
+                    existingActivity.setStartWeek(activity.getStartWeek());
+                    existingActivity.setEndWeek(activity.getEndWeek());
+                    existingActivity.setEstimatedHours(activity.getEstimatedHours());
+                    existingActivity.getUserInitials().clear();
+                    existingActivity.getUserInitials().addAll(activity.getUserInitials());
+                });
     }
+
     public int getNextActivityNumber(long projectNumber) {
         return dbContext.activities.stream()
-            .mapToInt(Activity::getNumber)
-            .max()
-            .orElse(0) + 1;
+                .mapToInt(Activity::getNumber)
+                .max()
+                .orElse(0) + 1;
     }
 
     public List<Activity> getAllUserActivities(String userInitials) {
@@ -71,6 +73,7 @@ public class ActivityHandler {
         return dbContext.activities.stream()
                 .filter(activity -> activity.getNumber() == activityNumber)
                 .flatMap(activity -> activity.getUserInitials().stream())
+                .distinct()
                 .toList();
     }
 

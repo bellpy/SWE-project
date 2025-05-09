@@ -10,8 +10,9 @@ Scenario: User can retrieve their assigneed activities
 Scenario: Update an activity
     Given the activity handler have been initialized
     And an activity with name "OldActivity" exists
+    And users "JS" are assigned to the activity
     When the activity is updated with name "UpdatedActivity"
-    Then the activity with name "UpdatedActivity" is returned
+    Then the activity it is renamed in the database to "UpdatedActivity"
 
 Scenario: Retrieve users by activity number
     Given the activity handler have been initialized

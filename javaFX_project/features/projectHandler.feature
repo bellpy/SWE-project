@@ -15,3 +15,9 @@ Scenario: Retrieve a project by an invalid ID
     Given the project handler has been initialized
     When I retrieve a project by ID -1
     Then no project is retrieved
+
+Scenario: Retrieve a project by ID
+    Given the project handler has been initialized
+    And I create a new project with name "TestProject" with manager "TestManager"
+    When I retrieve the project by its ID
+    Then the project details has "TestManager"
