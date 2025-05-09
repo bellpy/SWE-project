@@ -13,7 +13,6 @@ import java.util.List;
 
 public class CreateProjectController {
 
-    private DbContext dbContext;
     private ProjectHandler projectHandler;
 
     @FXML private TextField titleField;
@@ -26,7 +25,6 @@ public class CreateProjectController {
     private List<String> managers = new ArrayList<>();
 
     public void setDbContext(DbContext dbContext) {
-        this.dbContext = dbContext;
         this.projectHandler = new ProjectHandler(dbContext);
     }
 

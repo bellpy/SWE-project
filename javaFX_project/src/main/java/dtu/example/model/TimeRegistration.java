@@ -1,7 +1,6 @@
 package dtu.example.model;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class TimeRegistration {
     private String userInitials;

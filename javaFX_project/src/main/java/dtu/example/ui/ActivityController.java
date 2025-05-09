@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 
 public class ActivityController {
         
-    private DbContext dbContext;
     private ActivityHandler activityHandler;
 
     @FXML private TextField titleField;
@@ -34,7 +33,6 @@ public class ActivityController {
     private boolean isEditMode = false;
 
     public void setDbContext(DbContext dbContext) {
-        this.dbContext = dbContext;
         this.activityHandler = new ActivityHandler(dbContext);
     }
 
