@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dtu.example.model.DbContext;
+import dtu.example.handler.ActivityHandler;
 import dtu.example.model.Activity;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -15,6 +16,7 @@ import javafx.stage.Stage;
 public class ActivityController {
         
     private DbContext dbContext;
+    private ActivityHandler activityHandler;
 
     @FXML private TextField titleField;
     @FXML private TextField estimatedHoursField;
@@ -33,6 +35,7 @@ public class ActivityController {
 
     public void setDbContext(DbContext dbContext) {
         this.dbContext = dbContext;
+        this.activityHandler = new ActivityHandler(dbContext);
     }
 
     public void setProjectNumber(long projectNumber) {
@@ -88,22 +91,17 @@ public class ActivityController {
                 existingActivity.setEstimatedHours(estimatedHours);
                 existingActivity.getUserInitials().clear();
                 existingActivity.getUserInitials().addAll(employees);
+                activityHandler.updateActivity(existingActivity); // Update the activity
             } else {
-                // Create a new activity
-                int activityNumber = dbContext.activities.size() + 1;
-                Activity activity = new Activity(activityNumber, title, projectNumber);
-                activity.setStartWeek(startWeek);
-                activity.setEndWeek(endWeek);
-                activity.setEstimatedHours(estimatedHours);
-                for (String employee : employees) {
-                    activity.addUserInitials(employee);
-                }
-                dbContext.activities.add(activity);
+                // Add new activity
+                int activityNumber = activityHandler.getNextActivityNumber(projectNumber);       
+                activityHandler.createActivity(projectNumber, title, activityNumber, startWeek, endWeek, estimatedHours, employees); // Use ActivityHandler
             }
         
             Stage stage = (Stage) submitButton.getScene().getWindow();
             stage.close();
         });
+        
         
     }
 

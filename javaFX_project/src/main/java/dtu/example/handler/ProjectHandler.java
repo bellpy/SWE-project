@@ -18,14 +18,17 @@ public class ProjectHandler {
     public Project createProject(String name, List<String> managerInitials) {
         long id = generateProjectId();
         Project project = new Project(name, id);
+    
         if (managerInitials != null) {
-
             project.addManagers(managerInitials);
         }
-
+    
+        project.dateCreated = LocalDate.now();
+    
         dbContext.projects.add(project);
         return project;
     }
+    
 
     public Project getProjectById(long id){
         return dbContext.projects.stream()

@@ -3,7 +3,6 @@ package hellocucumber;
 import io.cucumber.java.en.*;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.Arrays;
-
 import java.util.List;
 
 import dtu.example.handler.ActivityHandler;
@@ -20,14 +19,21 @@ public class ActivityHandlerSteps {
     List<Activity> activities;
 
     // Scenario 1
-    @Given("the activity handler have been initilized")
-    public void theActivityHandlerHaveBeenInitilized() {
+    @Given("the activity handler have been initialized")
+    public void theActivityHandlerHaveBeenInitialized() {
         activityHandler = new ActivityHandler(dbContext);
     }
 
     @When("they create a new activity with {string}")
     public void theyCreateANewActivityWith(String string) {
-        activityHandler.createActivity(0, string, 0);
+        // Define startWeek, endWeek, estimatedHours, and userInitials
+        int startWeek = 1;
+        int endWeek = 2;
+        int estimatedHours = 10;
+        List<String> userInitials = Arrays.asList("JS"); // Example initials for the user creating the activity
+
+        // Pass all required parameters
+        activityHandler.createActivity(0, string, 0, startWeek, endWeek, estimatedHours, userInitials);
     }
 
     @Then("the dbContext activity is created with name {string}")
@@ -37,11 +43,9 @@ public class ActivityHandlerSteps {
                 .findFirst()
                 .orElse(null);
 
-        // Verify the activity exists
         assertNotNull(activity, "Activity with name '" + string + "' should exist in dbContext");
 
-        // Verify it has the correct properties (assuming projectNumber 0 was used in
-        // @When)
+        // Verify it has the correct properties (assuming projectNumber 0 was used in @When)
         assertEquals(0, activity.getProjectNumber(), "Activity should belong to correct project");
         assertEquals(string, activity.getName(), "Activity name should match");
     }
@@ -86,8 +90,13 @@ public class ActivityHandlerSteps {
 
     @Given("is assigned an activity with number {int}")
     public void isAssignedAnActivityWithNumber(Integer int1) {
-        activityHandler.createActivity(0, userInitials, int1);
-        activityHandler.assignUserToActivity(int1, userInitials);
+        int startWeek = 1;
+        int endWeek = 2;
+        int estimatedHours = 10;
+        List<String> userInitials = Arrays.asList("JS");
+
+        activityHandler.createActivity(0, "Test Activity", int1, startWeek, endWeek, estimatedHours, userInitials);
+        activityHandler.assignUserToActivity(int1, userInitials.get(0)); 
     }
 
     @When("user retrieves their assigned activities")

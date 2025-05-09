@@ -13,10 +13,35 @@ public class ActivityHandler {
         this.dbContext = dbContext;
     }
 
-    public void createActivity(int projectNumber, String name, int activityNumber) {
+    public void createActivity(long projectNumber, String name, int activityNumber, int startWeek, int endWeek, int estimatedHours, List<String> userInitials) {
         Activity activity = new Activity(activityNumber, name, projectNumber);
+        activity.setStartWeek(startWeek);
+        activity.setEndWeek(endWeek);
+        activity.setEstimatedHours(estimatedHours);
+        userInitials.forEach(activity::addUserInitials);
         dbContext.activities.add(activity);
     }
+
+    public void updateActivity(Activity activity) {
+        // Assuming activity already has the updated data
+        dbContext.activities.stream()
+            .filter(a -> a.getNumber() == activity.getNumber())
+            .findFirst()
+            .ifPresent(existingActivity -> {
+                existingActivity.setName(activity.getName());
+                existingActivity.setStartWeek(activity.getStartWeek());
+                existingActivity.setEndWeek(activity.getEndWeek());
+                existingActivity.setEstimatedHours(activity.getEstimatedHours());
+                existingActivity.getUserInitials().clear();
+                existingActivity.getUserInitials().addAll(activity.getUserInitials());
+            });
+    }
+
+    public int getNextActivityNumber(long projectNumber) {
+        return (int) dbContext.activities.stream()
+            .filter(a -> a.getProjectNumber() == projectNumber)
+            .count() + 1;
+    }    
 
     public List<Activity> getAllUserActivities(String userInitials) {
         return dbContext.activities.stream()

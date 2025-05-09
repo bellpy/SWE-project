@@ -1,20 +1,20 @@
 package dtu.example.ui;
 
+import dtu.example.handler.ProjectHandler;
 import dtu.example.model.DbContext;
-import dtu.example.model.Project;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CreateProjectController {
 
     private DbContext dbContext;
+    private ProjectHandler projectHandler;
 
     @FXML private TextField titleField;
     @FXML private TextField descriptionField;
@@ -27,6 +27,7 @@ public class CreateProjectController {
 
     public void setDbContext(DbContext dbContext) {
         this.dbContext = dbContext;
+        this.projectHandler = new ProjectHandler(dbContext);
     }
 
     @FXML
@@ -43,11 +44,7 @@ public class CreateProjectController {
         submitButton.setOnAction(e -> {
             String title = titleField.getText();
             if (!title.isBlank()) {
-                long id = dbContext.projects.size() + 1;
-                Project project = new Project(title, id);
-                project.addManagers(managers);
-                project.dateCreated = LocalDate.now();
-                dbContext.projects.add(project);
+                projectHandler.createProject(title, managers);
 
                 Stage stage = (Stage) submitButton.getScene().getWindow();
                 stage.close();
