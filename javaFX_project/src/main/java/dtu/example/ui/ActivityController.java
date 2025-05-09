@@ -94,8 +94,7 @@ public class ActivityController {
                 activityHandler.updateActivity(existingActivity); // Update the activity
             } else {
                 // Add new activity
-                int activityNumber = activityHandler.getNextActivityNumber(projectNumber);       
-                activityHandler.createActivity(projectNumber, title, activityNumber, startWeek, endWeek, estimatedHours, employees); // Use ActivityHandler
+                activityHandler.createActivity(projectNumber, title, startWeek, endWeek, estimatedHours, employees); // Use ActivityHandler
             }
         
             Stage stage = (Stage) submitButton.getScene().getWindow();

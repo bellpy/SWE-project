@@ -17,8 +17,8 @@ public class ActivityHandlerSteps {
 
     String userInitials;
     List<Activity> activities;
+    User user = new User("JS");
 
-    // Scenario 1
     @Given("the activity handler have been initialized")
     public void theActivityHandlerHaveBeenInitialized() {
         activityHandler = new ActivityHandler(dbContext);
@@ -27,30 +27,13 @@ public class ActivityHandlerSteps {
     @When("they create a new activity with {string}")
     public void theyCreateANewActivityWith(String string) {
         // Define startWeek, endWeek, estimatedHours, and userInitials
-        int startWeek = 1;
-        int endWeek = 2;
-        int estimatedHours = 10;
-        List<String> userInitials = Arrays.asList("JS"); // Example initials for the user creating the activity
+        List<String> userInitials = Arrays.asList(user.getInitials()); // Example initials for the user creating the
+                                                                       // activity
 
         // Pass all required parameters
-        activityHandler.createActivity(0, string, 0, startWeek, endWeek, estimatedHours, userInitials);
+        activityHandler.createActivity(0, string, 0, 0, 0, userInitials);
     }
 
-    @Then("the dbContext activity is created with name {string}")
-    public void theDbContextActivityIsCreatedWithName(String string) {
-        Activity activity = dbContext.activities.stream()
-                .filter(a -> a.getName().equals(string))
-                .findFirst()
-                .orElse(null);
-
-        assertNotNull(activity, "Activity with name '" + string + "' should exist in dbContext");
-
-        // Verify it has the correct properties (assuming projectNumber 0 was used in @When)
-        assertEquals(0, activity.getProjectNumber(), "Activity should belong to correct project");
-        assertEquals(string, activity.getName(), "Activity name should match");
-    }
-
-    // Scenario 2
     @Given("a user with initials {string} exists")
     public void aUserWithInitialsExists(String string) {
         User user = new User(string);
@@ -64,54 +47,66 @@ public class ActivityHandlerSteps {
         userInitials = string;
     }
 
-    @Given("an activity with number {int} exists")
-    public void anActivityWithNumberExists(Integer activityNumber) {
-        activity = new Activity(activityNumber, "Test Activity", 1001);
-        dbContext.activities.add(activity);
+    @When("user retrieves their assigned activities")
+    public void userRetrievesTheirAssignedActivities() {
+        activities = activityHandler.getAllUserActivities(user.getInitials());
     }
 
-    @When("user adds employee with initials {string} to the activity")
-    public void userAddsEmployeeWithInitialsToTheActivity(String initials) {
-        activity.addUserInitials(initials);
+    @Given("is assigned an activity with name {string}")
+    public void isAssignedAnActivityWithName(String string) {
+        List<String> userInitials = Arrays.asList(user.getInitials());
+        int activityNumber = activityHandler.createActivity(0, string, 0, 0, 0, userInitials);
+        activityHandler.assignUserToActivity(activityNumber, userInitials.get(0));
     }
 
-    @Then("the activity {int} has the employee with initials {string}, assigned to it")
-    public void theActivityHasTheEmployeeWithInitialsAssignedTo(Integer activityNumber, String expectedInitials) {
-        Activity activity = dbContext.activities.stream()
-                .filter(a -> a.getNumber() == activityNumber)
+    @Then("the activity with name {string} is returned")
+    public void theActivityWithNameIsReturned(String string) {
+        Activity usersActivity = activities.stream()
+                .filter(activity -> activity.getName().equals(string))
                 .findFirst()
                 .orElse(null);
 
-        assertNotNull(activity, "Activity should exist");
-        assertEquals(activityNumber, activity.getNumber(), "Activity number should match");
-        assertTrue(activity.getUserInitials().contains(expectedInitials),
-                "Activity should have employee with initials " + expectedInitials);
+        assertNotNull(usersActivity, "Activity with name '" + string + "' should exist in the list");
+        assertEquals(string, usersActivity.getName(), "Activity name should match");
     }
 
-    @Given("is assigned an activity with number {int}")
-    public void isAssignedAnActivityWithNumber(Integer int1) {
-        int startWeek = 1;
-        int endWeek = 2;
-        int estimatedHours = 10;
-        List<String> userInitials = Arrays.asList("JS");
-
-        activityHandler.createActivity(0, "Test Activity", int1, startWeek, endWeek, estimatedHours, userInitials);
-        activityHandler.assignUserToActivity(int1, userInitials.get(0)); 
+    @Given("an activity with name {string} exists")
+    public void anActivityWithNameExists(String name) {
+        List<String> userInitials = Arrays.asList(user.getInitials());
+        int activityNumber = activityHandler.createActivity(0, name, 0, 0, 0, userInitials);
+        activity = dbContext.activities.stream()
+                .filter(a -> a.getNumber() == activityNumber)
+                .findFirst()
+                .orElse(null);
+        assertNotNull(activity, "Activity should be created successfully");
     }
 
-    @When("user retrieves their assigned activities")
-    public void userRetrievesTheirAssignedActivities() {
-        activities = activityHandler.getAllUserActivities(userInitials);
+    @When("the activity is updated with name {string}")
+    public void theActivityIsUpdatedWithName(String updatedName) {
+        assertNotNull(activity, "Activity must exist before updating");
+        activity.setName(updatedName);
+        activityHandler.updateActivity(activity);
     }
 
-    @Then("the activity {int} is returned")
-    public void theActivityIsReturned(Integer int1) {
-        assertNotNull(activities, "Activities list should not be null");
-        assertFalse(activities.isEmpty(), "Activities list should not be empty");
+    @Given("users {string} are assigned to the activity")
+    public void usersAreAssignedToTheActivity(String userInitialsString) {
+        assertNotNull(activity, "Activity must exist before assigning users");
+        String[] userInitialsArray = userInitialsString.split(", ");
+        for (String initials : userInitialsArray) {
+            activityHandler.assignUserToActivity(activity.getNumber(), initials);
+        }
+    }
 
-        boolean activityFound = activities.stream()
-                .anyMatch(activity -> activity.getNumber() == int1);
+    @When("users are retrieved by activity number")
+    public void usersAreRetrievedByActivityNumber() {
+        assertNotNull(activity, "Activity must exist before retrieving users");
+        List<String> retrievedUsers = activityHandler.getUsersByActivityNumber(activity.getNumber());
+        assertNotNull(retrievedUsers, "Retrieved users list should not be null");
+        userInitials = String.join(", ", retrievedUsers);
+    }
 
-        assertTrue(activityFound, "Activity with number " + int1 + " should be in the list");
+    @Then("the users {string} are returned")
+    public void theUsersAreReturned(String expectedUsers) {
+        assertEquals(expectedUsers, userInitials, "Retrieved users should match the expected users");
     }
 }

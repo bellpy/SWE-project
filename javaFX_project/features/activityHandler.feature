@@ -1,20 +1,21 @@
 Feature: Activity Handler
 
-Scenario: User creating activity on project
-    Given the activity handler have been initilized
-    When they create a new activity with "myActivity"
-    Then the dbContext activity is created with name "myActivity"
-
-Scenario: User adds an employee to an activity succesfully
-    Given a user with initials "user" exists
-    And an employee with initials "abcd" exists
-    And an activity with number 25001 exists
-    When user adds employee with initials "abcd" to the activity
-    Then the activity 25001 has the employee with initials "abcd", assigned to it
-
 Scenario: User can retrieve their assigneed activities
-    Given the activity handler have been initilized
+    Given the activity handler have been initialized
     And a user with initials "user" exists
-    And is assigned an activity with number 25001
+    And is assigned an activity with name "myActivity"
     When user retrieves their assigned activities
-    Then the activity 25001 is returned
+    Then the activity with name "myActivity" is returned
+
+Scenario: Update an activity
+    Given the activity handler have been initialized
+    And an activity with name "OldActivity" exists
+    When the activity is updated with name "UpdatedActivity"
+    Then the activity with name "UpdatedActivity" is returned
+
+Scenario: Retrieve users by activity number
+    Given the activity handler have been initialized
+    And an activity with name "TeamActivity" exists
+    And users "JS, AB" are assigned to the activity
+    When users are retrieved by activity number
+    Then the users "JS, AB" are returned

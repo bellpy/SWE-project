@@ -12,14 +12,16 @@ public class ActivityHandler {
     public ActivityHandler(DbContext dbContext) {
         this.dbContext = dbContext;
     }
-
-    public void createActivity(long projectNumber, String name, int activityNumber, int startWeek, int endWeek, int estimatedHours, List<String> userInitials) {
+    
+    public int createActivity(long projectNumber, String name, int startWeek, int endWeek, int estimatedHours, List<String> userInitials) {
+        int activityNumber = getNextActivityNumber(projectNumber);
         Activity activity = new Activity(activityNumber, name, projectNumber);
         activity.setStartWeek(startWeek);
         activity.setEndWeek(endWeek);
         activity.setEstimatedHours(estimatedHours);
         userInitials.forEach(activity::addUserInitials);
         dbContext.activities.add(activity);
+        return activityNumber;
     }
 
     public void updateActivity(Activity activity) {
@@ -36,12 +38,12 @@ public class ActivityHandler {
                 existingActivity.getUserInitials().addAll(activity.getUserInitials());
             });
     }
-
     public int getNextActivityNumber(long projectNumber) {
-        return (int) dbContext.activities.stream()
-            .filter(a -> a.getProjectNumber() == projectNumber)
-            .count() + 1;
-    }    
+        return dbContext.activities.stream()
+            .mapToInt(Activity::getNumber)
+            .max()
+            .orElse(0) + 1;
+    }
 
     public List<Activity> getAllUserActivities(String userInitials) {
         return dbContext.activities.stream()
