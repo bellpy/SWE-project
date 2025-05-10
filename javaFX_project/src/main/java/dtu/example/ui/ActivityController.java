@@ -5,6 +5,7 @@ import java.util.List;
 
 import dtu.example.model.DbContext;
 import dtu.example.handler.ActivityHandler;
+import dtu.example.handler.interfaces.IActivityHandler;
 import dtu.example.model.Activity;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -15,7 +16,7 @@ import javafx.stage.Stage;
 
 public class ActivityController {
         
-    private ActivityHandler activityHandler;
+    private IActivityHandler activityHandler;
 
     @FXML private TextField titleField;
     @FXML private TextField estimatedHoursField;
@@ -32,8 +33,8 @@ public class ActivityController {
     private Activity existingActivity = null;  // If not null, we're in edit mode
     private boolean isEditMode = false;
 
-    public void setDbContext(DbContext dbContext) {
-        this.activityHandler = new ActivityHandler(dbContext);
+    public void setHandler(IActivityHandler activityHandler) {
+        this.activityHandler = activityHandler;
     }
 
     public void setProjectNumber(long projectNumber) {

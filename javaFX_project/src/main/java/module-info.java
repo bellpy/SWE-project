@@ -6,4 +6,5 @@ module hellofx {
     exports dtu.example.ui;
     exports dtu.example.model;
     opens dtu.example.ui to javafx.fxml;
+    exports dtu.example.handler.interfaces;
 }

@@ -9,6 +9,10 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
+import dtu.example.handler.ActivityHandler;
+import dtu.example.handler.ProjectHandler;
+import dtu.example.handler.ReportHandler;
+import dtu.example.handler.TimeRegistrationHandler;
 import dtu.example.model.DbContext;
 
 public class LoginController {
@@ -30,13 +34,19 @@ public class LoginController {
             errorLabel.setVisible(true);
             return;
         }
-        
-        dbContext = new DbContext(); 
+
+        dbContext = new DbContext();
         FXMLLoader loader = new FXMLLoader(App.class.getResource("mainMenu.fxml"));
         Parent root = loader.load();
 
         MainMenuController mainMenuController = loader.getController();
         mainMenuController.setDbContext(dbContext);
+        mainMenuController.setHandlers(
+                new ActivityHandler(dbContext)
+        // new ProjectHandler(dbContext),
+        // new ReportHandler(dbContext),
+        // new TimeRegistrationHandler(dbContext)
+        );
         mainMenuController.setUserInitials(initials); // Pass initials to the controller
         mainMenuController.onDbContextSet();
 

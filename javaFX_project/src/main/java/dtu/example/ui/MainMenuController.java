@@ -9,6 +9,7 @@ import dtu.example.model.DbContext;
 import dtu.example.model.Project;
 import dtu.example.handler.ProjectHandler;
 import dtu.example.handler.ReportHandler;
+import dtu.example.handler.interfaces.IActivityHandler;
 import dtu.example.handler.ActivityHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,7 +33,7 @@ import javafx.stage.Stage;
 public class MainMenuController {
     DbContext dbContext;
     ProjectHandler projectHandler;
-    ActivityHandler activityHandler;
+    IActivityHandler activityHandler;
     ReportHandler reportHandler;
 
     private Map<String, Long> projectNameToIdMap = new HashMap<>();
@@ -61,9 +62,16 @@ public class MainMenuController {
         }
     }
 
+    public void setHandlers(IActivityHandler activityHandler){
+    //, IProjectHandler projectHandler, IReportHandler reportHandler, ITimeRegistrationHandler timeRegistrationHandler) {
+        this.activityHandler = activityHandler;
+       // this.projectHandler = projectHandler;
+        //this.reportHandler = reportHandler;
+       // this.timeRegistrationHandler = timeRegistrationHandler;
+    }
+
     public void getProject() {
         projectHandler = new ProjectHandler(dbContext);
-        activityHandler = new ActivityHandler(dbContext);
         reportHandler = new ReportHandler(dbContext);
         // Convert List<Project> to List<String> (e.g., project names) and populate the
         // map
@@ -186,7 +194,7 @@ public class MainMenuController {
         Parent popupContent = loader.load();
 
         ActivityController controller = loader.getController();
-        controller.setDbContext(dbContext);
+        controller.setHandler(activityHandler);
         controller.setProjectNumber(selectedProject.getId());
         
 
@@ -204,7 +212,7 @@ public class MainMenuController {
         Parent popupContent = loader.load();
     
         ActivityController controller = loader.getController();
-        controller.setDbContext(dbContext);
+        controller.setHandler(activityHandler);
         controller.setProjectNumber(activity.getProjectNumber());
         controller.setActivityToEdit(activity);
     

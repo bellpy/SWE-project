@@ -2,10 +2,11 @@ package dtu.example.handler;
 
 import java.util.List;
 
+import dtu.example.handler.interfaces.IActivityHandler;
 import dtu.example.model.Activity;
 import dtu.example.model.DbContext;
 
-public class ActivityHandler extends BaseHandler {
+public class ActivityHandler extends BaseHandler implements IActivityHandler{
 
     public ActivityHandler(DbContext dbContext) {
         super(dbContext);
