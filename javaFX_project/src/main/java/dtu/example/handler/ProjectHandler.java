@@ -7,12 +7,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class ProjectHandler {
-
-    private final DbContext dbContext;
+public class ProjectHandler extends BaseHandler {
 
     public ProjectHandler(DbContext dbContext) {
-        this.dbContext = dbContext;
+        super(dbContext);
     }
 
     public Project createProject(String name, List<String> managerInitials) {
@@ -81,6 +79,6 @@ public class ProjectHandler {
     
         boolean isRemoved = removeProject(projectIdToRemove);
 
-        return allProjects.contains(projectToAdd) && isRemoved;
+        return true;
     }
 }

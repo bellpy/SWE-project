@@ -36,8 +36,8 @@ public class LoginController {
         Parent root = loader.load();
 
         MainMenuController mainMenuController = loader.getController();
-        mainMenuController.setUserInitials(initials); // Pass initials to the controller
         mainMenuController.setDbContext(dbContext);
+        mainMenuController.setUserInitials(initials); // Pass initials to the controller
         mainMenuController.onDbContextSet();
 
         // Use the FXMLLoader's root object to set the scene

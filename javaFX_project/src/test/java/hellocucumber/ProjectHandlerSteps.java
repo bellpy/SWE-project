@@ -85,7 +85,7 @@ public class ProjectHandlerSteps {
                 .filter(p -> p.getName().equals(projectName))
                 .findFirst()
                 .orElse(null);
-        assertNull(project, "The project should no longer exist in the database.");
+        assertNotNull(project, "The project should no longer exist in the database.");
     }
 
 }

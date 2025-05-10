@@ -5,12 +5,10 @@ import java.util.List;
 import dtu.example.model.Activity;
 import dtu.example.model.DbContext;
 
-public class ActivityHandler {
-
-    private DbContext dbContext;
+public class ActivityHandler extends BaseHandler {
 
     public ActivityHandler(DbContext dbContext) {
-        this.dbContext = dbContext;
+        super(dbContext);
     }
 
     public int createActivity(long projectNumber, String name, int startWeek, int endWeek, int estimatedHours,

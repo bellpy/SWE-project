@@ -5,12 +5,10 @@ import java.util.List;
 
 import dtu.example.model.DbContext;
 
-public class TimeRegistrationHandler {
+public class TimeRegistrationHandler extends BaseHandler {
     
-    private final DbContext dbContext;
-
     public TimeRegistrationHandler(DbContext dbContext) {
-        this.dbContext = dbContext;
+        super(dbContext);
     }
 
     public void registerTime(String userInitials, int activityNumber, double hoursWorked, int daysAgo) {
