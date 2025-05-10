@@ -6,6 +6,8 @@ import dtu.example.model.Project;
 import dtu.example.model.TimeRegistration;
 import dtu.example.handler.ProjectHandler;
 import dtu.example.handler.TimeRegistrationHandler;
+import dtu.example.handler.interfaces.IProjectHandler;
+import dtu.example.handler.interfaces.ITimeRegistrationHandler;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -37,18 +39,16 @@ public class RegistrationsController {
     private int currentActivityId;
     private String userInitials;
     private Runnable backHandler;
-    private ProjectHandler projectHandler;
-
-
-    private TimeRegistrationHandler registrationHandler;
+    private IProjectHandler projectHandler;
+    private ITimeRegistrationHandler registrationHandler;
 
     /** Called by MainMenuController right after FXML load */
-    public void init(DbContext dbContext, String userInitials, Runnable onBack) {
+    public void init(DbContext dbContext, IProjectHandler projectHandler, String userInitials, Runnable onBack) {
         this.dbContext = dbContext;
         this.userInitials = userInitials;
         this.backHandler = onBack;
         this.registrationHandler = new TimeRegistrationHandler(dbContext);
-        this.projectHandler = new ProjectHandler(dbContext);
+        this.projectHandler = projectHandler;
 
         // wire up the table columns
         dateColumn.setCellValueFactory(

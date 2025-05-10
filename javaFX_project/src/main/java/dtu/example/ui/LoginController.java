@@ -42,8 +42,8 @@ public class LoginController {
         MainMenuController mainMenuController = loader.getController();
         mainMenuController.setDbContext(dbContext);
         mainMenuController.setHandlers(
-                new ActivityHandler(dbContext)
-        // new ProjectHandler(dbContext),
+                new ActivityHandler(dbContext), 
+                new ProjectHandler(dbContext)
         // new ReportHandler(dbContext),
         // new TimeRegistrationHandler(dbContext)
         );

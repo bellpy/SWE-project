@@ -8,18 +8,19 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import dtu.example.handler.interfaces.IActivityHandler;
+import dtu.example.handler.interfaces.ITimeRegistrationHandler;
 import dtu.example.model.Activity;
-import dtu.example.model.DbContext;
 
-public class ReportHandler {
-    private final ActivityHandler activityHandler;
-    private final TimeRegistrationHandler timeRegistrationHandler;
+public class ReportHandler implements dtu.example.handler.interfaces.IReportHandler{
+    private final IActivityHandler activityHandler;
+    private final ITimeRegistrationHandler timeRegistrationHandler;
 
     private String filePath;
 
-    public ReportHandler(DbContext dbContext) {
-        this.activityHandler = new ActivityHandler(dbContext);
-        this.timeRegistrationHandler = new TimeRegistrationHandler(dbContext);
+    public ReportHandler(IActivityHandler activityHandler, ITimeRegistrationHandler timeRegistrationHandler) {
+        this.activityHandler = activityHandler;
+        this.timeRegistrationHandler = timeRegistrationHandler;
     }
 
     public String generateAndSaveReport(long projectNumber) {

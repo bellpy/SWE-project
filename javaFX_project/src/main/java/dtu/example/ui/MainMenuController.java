@@ -7,10 +7,11 @@ import java.util.Map;
 import dtu.example.model.Activity;
 import dtu.example.model.DbContext;
 import dtu.example.model.Project;
-import dtu.example.handler.ProjectHandler;
+import dtu.example.handler.TimeRegistrationHandler;
 import dtu.example.handler.ReportHandler;
 import dtu.example.handler.interfaces.IActivityHandler;
-import dtu.example.handler.ActivityHandler;
+import dtu.example.handler.interfaces.IProjectHandler;
+import dtu.example.handler.interfaces.IReportHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -32,9 +33,9 @@ import javafx.stage.Stage;
 
 public class MainMenuController {
     DbContext dbContext;
-    ProjectHandler projectHandler;
+    IProjectHandler projectHandler;
     IActivityHandler activityHandler;
-    ReportHandler reportHandler;
+    IReportHandler reportHandler;
 
     private Map<String, Long> projectNameToIdMap = new HashMap<>();
 
@@ -62,17 +63,14 @@ public class MainMenuController {
         }
     }
 
-    public void setHandlers(IActivityHandler activityHandler){
-    //, IProjectHandler projectHandler, IReportHandler reportHandler, ITimeRegistrationHandler timeRegistrationHandler) {
+    public void setHandlers(IActivityHandler activityHandler,  IProjectHandler projectHandler){
+    //, IReportHandler reportHandler, ITimeRegistrationHandler timeRegistrationHandler) {
         this.activityHandler = activityHandler;
-       // this.projectHandler = projectHandler;
-        //this.reportHandler = reportHandler;
-       // this.timeRegistrationHandler = timeRegistrationHandler;
+        this.projectHandler = projectHandler;
+        reportHandler = new ReportHandler(activityHandler, new TimeRegistrationHandler(dbContext));
     }
 
     public void getProject() {
-        projectHandler = new ProjectHandler(dbContext);
-        reportHandler = new ReportHandler(dbContext);
         // Convert List<Project> to List<String> (e.g., project names) and populate the
         // map
         ObservableList<String> projects = FXCollections.observableArrayList();
@@ -151,7 +149,6 @@ public class MainMenuController {
         String selectedProjectName = projectsListView.getSelectionModel().getSelectedItem();
         if (selectedProjectName != null && projectNameToIdMap.containsKey(selectedProjectName)) {
             long projectId = projectNameToIdMap.get(selectedProjectName);
-            ProjectHandler projectHandler = new ProjectHandler(dbContext);
             return projectHandler.getProjectById(projectId); // Fetch the full project details
         }
         return null; // Return null if no project is selected or ID is not found
@@ -163,7 +160,7 @@ public class MainMenuController {
         Parent popupContent = loader.load();
 
         CreateProjectController controller = loader.getController();
-        controller.setDbContext(dbContext);
+        controller.setProjectHandler(projectHandler);
 
         Stage popupStage = new Stage();
         popupStage.setTitle("Create Project");
@@ -329,7 +326,7 @@ public class MainMenuController {
     
             // Get the controller and store it in the UserData of the view
             RegistrationsController controller = loader.getController();
-            controller.init(dbContext, userInitials, this::showProjectDetails);
+            controller.init(dbContext, projectHandler, userInitials, this::showProjectDetails);
             registrationsView.setUserData(controller);
         } catch (IOException e) {
             e.printStackTrace();

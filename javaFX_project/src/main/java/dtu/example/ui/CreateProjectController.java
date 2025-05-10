@@ -1,6 +1,7 @@
 package dtu.example.ui;
 
 import dtu.example.handler.ProjectHandler;
+import dtu.example.handler.interfaces.IProjectHandler;
 import dtu.example.model.DbContext;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class CreateProjectController {
 
-    private ProjectHandler projectHandler;
+    private IProjectHandler projectHandler;
 
     @FXML private TextField titleField;
     @FXML private TextField descriptionField;
@@ -24,8 +25,8 @@ public class CreateProjectController {
 
     private List<String> managers = new ArrayList<>();
 
-    public void setDbContext(DbContext dbContext) {
-        this.projectHandler = new ProjectHandler(dbContext);
+    public void setProjectHandler(IProjectHandler projectHandler) {
+        this.projectHandler = projectHandler;
     }
 
     @FXML

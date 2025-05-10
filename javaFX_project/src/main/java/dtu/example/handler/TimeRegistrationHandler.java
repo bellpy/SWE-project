@@ -4,8 +4,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 import dtu.example.model.DbContext;
+import dtu.example.handler.interfaces.ITimeRegistrationHandler;
 
-public class TimeRegistrationHandler extends BaseHandler {
+public class TimeRegistrationHandler extends BaseHandler implements ITimeRegistrationHandler {
     
     public TimeRegistrationHandler(DbContext dbContext) {
         super(dbContext);

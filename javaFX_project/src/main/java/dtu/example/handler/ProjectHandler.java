@@ -2,12 +2,13 @@ package dtu.example.handler;
 
 import dtu.example.model.Project;
 import dtu.example.model.DbContext;
+import dtu.example.handler.interfaces.IProjectHandler;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class ProjectHandler extends BaseHandler {
+public class ProjectHandler extends BaseHandler implements IProjectHandler {
 
     public ProjectHandler(DbContext dbContext) {
         super(dbContext);

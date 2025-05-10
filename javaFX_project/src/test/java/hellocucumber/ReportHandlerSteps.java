@@ -1,5 +1,6 @@
 package hellocucumber;
 
+import io.cucumber.java.be.I;
 import io.cucumber.java.en.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,11 +10,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import dtu.example.handler.ProjectHandler;
+import dtu.example.handler.ActivityHandler;
 import dtu.example.handler.ReportHandler;
+import dtu.example.handler.TimeRegistrationHandler;
+import dtu.example.handler.interfaces.IActivityHandler;
+import dtu.example.handler.interfaces.ITimeRegistrationHandler;
 import dtu.example.model.Activity;
 import dtu.example.model.DbContext;
-import dtu.example.model.Project;
 
 public class ReportHandlerSteps {
     DbContext dbContext = new DbContext();
@@ -25,7 +28,9 @@ public class ReportHandlerSteps {
 
     @Given("the report handler has been initialized")
     public void theReportHandlerHasBeenInitialized() {
-        reportHandler = new ReportHandler(dbContext);
+        IActivityHandler activityHandler = new ActivityHandler(dbContext);
+        ITimeRegistrationHandler timeRegistrationHandler = new TimeRegistrationHandler(dbContext);
+        reportHandler = new ReportHandler(activityHandler, timeRegistrationHandler);
     }
 
     @Given("the database contains a project with number {int} and activities and activities")
