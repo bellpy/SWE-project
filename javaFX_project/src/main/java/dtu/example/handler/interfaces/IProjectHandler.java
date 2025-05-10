@@ -8,7 +8,4 @@ public interface IProjectHandler {
     Project getProjectById(long id);
     String getProjectDetailsById(long id);
     List<Project> getAllProjects();
-    void addProject(Project project);
-    boolean removeProject(int id);
-    boolean manageProjects(Project projectToAdd, int projectIdToRemove);
 }

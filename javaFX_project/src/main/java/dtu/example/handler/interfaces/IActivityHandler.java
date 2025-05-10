@@ -7,7 +7,5 @@ public interface IActivityHandler {
     int createActivity(long projectNumber, String name, int startWeek, int endWeek, int estimatedHours, List<String> userInitials);
     void updateActivity(Activity activity);
     List<Activity> getAllUserActivities(String userInitials);
-    void assignUserToActivity(int activityNumber, String userInitials);
     List<Activity> getActivitiesByProjectNumber(long projectNumber);
-    List<String> getUsersByActivityNumber(int activityNumber);
 }
