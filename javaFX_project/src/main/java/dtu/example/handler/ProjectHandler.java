@@ -72,4 +72,15 @@ public class ProjectHandler {
     
         return Long.parseLong(todayPrefix + String.format("%04d", nextSuffix));
     }
+
+    public boolean manageProjects(Project projectToAdd, int projectIdToRemove) {
+
+        addProject(projectToAdd);
+    
+        List<Project> allProjects = getAllProjects();
+    
+        boolean isRemoved = removeProject(projectIdToRemove);
+
+        return allProjects.contains(projectToAdd) && isRemoved;
+    }
 }

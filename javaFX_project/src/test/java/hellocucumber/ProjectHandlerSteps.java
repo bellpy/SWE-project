@@ -57,18 +57,35 @@ public class ProjectHandlerSteps {
     public void noProjectIsRetrieved() {
         assertNull(retrievedProject);
     }
-    
-@Given("I create a new project with name {string} with manager {string}")
-public void iCreateANewProjectWithNameWithManager(String string, String string2) {
-    List<String> managerInitials = List.of(string2);
-    Project project = projectHandler.createProject(string, managerInitials);
-    projectId = project.getId();
-}
 
-@Then("the project details has {string}")
-public void theProjectDetailsHas(String string) {
-    String projectDetails = projectHandler.getProjectDetailsById(projectId);
-    assertNotNull(projectDetails, "Project details should not be null");
-    assertTrue(projectDetails.contains(string), "Project details should contain: " + string);
-}
+    @Given("I create a new project with name {string} with manager {string}")
+    public void iCreateANewProjectWithNameWithManager(String string, String string2) {
+        List<String> managerInitials = List.of(string2);
+        Project project = projectHandler.createProject(string, managerInitials);
+        projectId = project.getId();
+    }
+
+    @Then("the project details has {string}")
+    public void theProjectDetailsHas(String string) {
+        String projectDetails = projectHandler.getProjectDetailsById(projectId);
+        assertNotNull(projectDetails, "Project details should not be null");
+        assertTrue(projectDetails.contains(string), "Project details should contain: " + string);
+    }
+
+    @When("I manage projects by adding {string} and removing its ID")
+    public void iManageProjectsByAddingAndRemovingItsID(String projectName) {
+        Project projectToAdd = new Project(projectName, projectId);
+        boolean result = projectHandler.manageProjects(projectToAdd, (int) projectId);
+        assertTrue(result, "The project should be added and removed successfully.");
+    }
+
+    @Then("the project {string} is added and removed successfully")
+    public void theProjectIsAddedAndRemovedSuccessfully(String projectName) {
+        Project project = dbContext.projects.stream()
+                .filter(p -> p.getName().equals(projectName))
+                .findFirst()
+                .orElse(null);
+        assertNull(project, "The project should no longer exist in the database.");
+    }
+
 }

@@ -21,3 +21,9 @@ Scenario: Retrieve a project by ID
     And I create a new project with name "TestProject" with manager "TestManager"
     When I retrieve the project by its ID
     Then the project details has "TestManager"
+
+Scenario: Manage projects by adding and removing
+    Given the project handler has been initialized
+    And I create a new project with name "ProjectToAdd"
+    When I manage projects by adding "ProjectToAdd" and removing its ID
+    Then the project "ProjectToAdd" is added and removed successfully
