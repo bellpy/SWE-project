@@ -83,13 +83,13 @@ public class ActivityController {
         
             if (isEditMode && existingActivity != null) {
                 // Modify the existing activity
-                existingActivity.setName(title);
-                existingActivity.setStartWeek(startWeek);
-                existingActivity.setEndWeek(endWeek);
-                existingActivity.setEstimatedHours(estimatedHours);
-                existingActivity.getUserInitials().clear();
-                existingActivity.getUserInitials().addAll(employees);
-                activityHandler.updateActivity(existingActivity); // Update the activity
+                Activity updatedActivity = new Activity(existingActivity.getNumber(), title, projectNumber);
+                updatedActivity.setStartWeek(startWeek);
+                updatedActivity.setEndWeek(endWeek);
+                updatedActivity.setEstimatedHours(estimatedHours);
+                updatedActivity.setAllUserInitials(employees);
+
+                activityHandler.updateActivity(updatedActivity); 
             } else {
                 // Add new activity
                 activityHandler.createActivity(projectNumber, title, startWeek, endWeek, estimatedHours, employees); // Use ActivityHandler
