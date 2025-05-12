@@ -18,16 +18,16 @@
       <TextField fx:id="titleField" layoutX="97.0" layoutY="68.0" prefHeight="24.0" prefWidth="174.0" />
       <Text layoutX="60.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title" />
       <Text layoutX="57.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start week" />
+      <Text layoutX="68.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Assign employees" />
+      <Text layoutX="62.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estimated hours" />
+      <TextField fx:id="startWeekField" layoutX="61.0" layoutY="134.0" prefHeight="24.0" prefWidth="95.0" />
+      <TextField fx:id="endWeekField" layoutX="176.0" layoutY="134.0" prefHeight="24.0" prefWidth="95.0" />
+      <TextField fx:id="estimatedHoursField" layoutX="62.0" layoutY="200.0" prefHeight="24.0" prefWidth="207.0" />
       <TextField fx:id="initialsField" layoutX="65.0" layoutY="262.0" prefHeight="24.0" prefWidth="182.0" promptText="Input initials" />
       <Button fx:id="addButton" layoutX="229.0" layoutY="262.0" mnemonicParsing="false" text="Add" />
       <ListView fx:id="employeesListView" layoutX="66.0" layoutY="296.0" prefHeight="91.0" prefWidth="207.0" />
       <Button fx:id="submitButton" layoutX="121.0" layoutY="415.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="95.0" text="Submit" />
-      <Text layoutX="68.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Assign employees" />
-      <Text layoutX="62.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estimated hours" />
-      <TextField fx:id="startWeekField" layoutX="61.0" layoutY="134.0" prefHeight="24.0" prefWidth="95.0" />
-      <TextField fx:id="estimatedHoursField" layoutX="62.0" layoutY="200.0" prefHeight="24.0" prefWidth="207.0" />
       <Text layoutX="176.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End week" />
-      <TextField fx:id="endWeekField" layoutX="176.0" layoutY="134.0" prefHeight="24.0" prefWidth="95.0" />
       <Text layoutX="66.0" layoutY="401.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Double click to delete an assigned employee">
          <font>
             <Font name="System Italic" size="8.0" />
