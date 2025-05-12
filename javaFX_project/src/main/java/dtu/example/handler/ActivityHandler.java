@@ -55,7 +55,7 @@ public class ActivityHandler extends BaseHandler implements IActivityHandler{
     public void assignUserToActivity(int activityNumber, String userInitials) {
         Activity activity = dbContext.activities.stream()
                 .filter(a -> a.getNumber() == activityNumber)
-                .findFirst()
+                .findFirst() 
                 .orElse(null);
         if (activity != null) {
             activity.addUserInitials(userInitials);
